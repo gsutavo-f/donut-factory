@@ -13,7 +13,7 @@ const db = mysql.createConnection({
     database: 'donuts'
 });
 
-app.post('/create', (req, res) => {
+app.post('/funcionario/create', (req, res) => {
     const name = req.body.name;
     const cpf = req.body.cpf;
     const position = req.body.position;
@@ -24,10 +24,23 @@ app.post('/create', (req, res) => {
         "insert into funcionario (nome, cpf, cargo, salario, codfilial, dataemissao) values (?,?,?,?,?,?)",
         [name, cpf, position, salary, filial, new Date()],
         (err, result) => {
-            if(err) {
+            if (err) {
                 console.log(err);
             } else {
                 res.send("Values Inserted");
+            }
+        }
+    );
+});
+
+app.get("/funcionario/list", (req, res) => {
+    db.query(
+        "select * from funcionario",
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
             }
         }
     );
