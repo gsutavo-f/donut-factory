@@ -78,7 +78,7 @@ function FuncionarioForm() {
 
         {employeeList.map((val, key) => {
           return (
-            <div className="employee">
+            <div className="employee" key={key}>
               <h3>Name: {val.nome}</h3>
               <h3>Document: {val.cpf}</h3>
               <h3>Position: {val.cargo}</h3>

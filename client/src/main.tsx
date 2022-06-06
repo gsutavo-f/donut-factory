@@ -7,6 +7,7 @@ import {
   Route,
 } from "react-router-dom";
 import Funcionario from './pages/Funcionario';
+import Filial from './pages/Filial';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -14,6 +15,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/funcionario" element={<Funcionario />} />
+        <Route path="/filial" element={<Filial />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

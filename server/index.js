@@ -46,6 +46,36 @@ app.get("/funcionario/list", (req, res) => {
     );
 });
 
+app.post("/filial/create", (req, res) => {
+    const name = req.body.name;
+    const address = req.body.address;
+
+    db.query(
+        "insert into filial (nome, endereco) values (?,?)",
+        [name, address],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("Values Inserted");
+            }
+        }
+    );
+});
+
+app.get("/filial/list", (req, res) => {
+    db.query(
+        "select * from filial",
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+})
+
 app.listen(3001, () => {
     console.log("Running...");
 });
