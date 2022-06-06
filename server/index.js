@@ -76,6 +76,38 @@ app.get("/filial/list", (req, res) => {
     );
 })
 
+app.post('/sabor/create', (req, res) => {
+    const name = req.body.name;
+    const price = req.body.price;
+    const ingredient = req.body.ingredient;
+    const type = req.body.type;
+
+    db.query(
+        "insert into sabordonut (nome, preco, ingrediente, tipo) values (?,?,?,?)",
+        [name, price, ingredient, type],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("Values Inserted");
+            }
+        }
+    );
+});
+
+app.get("/sabor/list", (req, res) => {
+    db.query(
+        "select * from sabordonut",
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
 app.listen(3001, () => {
     console.log("Running...");
 });

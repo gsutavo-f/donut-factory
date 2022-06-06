@@ -8,7 +8,7 @@ interface Filial {
   endereco: string
 }
 
-function FuncionarioForm() {
+function FilialForm() {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
 
@@ -62,4 +62,4 @@ function FuncionarioForm() {
   )
 }
 
-export default FuncionarioForm
+export default FilialForm;

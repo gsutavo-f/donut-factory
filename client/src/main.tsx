@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Funcionario from './pages/Funcionario';
 import Filial from './pages/Filial';
+import Sabor from './pages/Sabor';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<App />} />
         <Route path="/funcionario" element={<Funcionario />} />
         <Route path="/filial" element={<Filial />} />
+        <Route path="/sabor" element={<Sabor />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
