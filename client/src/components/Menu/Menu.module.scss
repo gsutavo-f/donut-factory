@@ -1,0 +1,47 @@
+.menu {
+  align-items: center;
+  background-color: #ED91AD;
+  color: white;
+  display: flex;
+  font-family: 'Anton', serif;
+  height: 8vh;
+  justify-content: space-between;
+  padding: 0 32px;
+  text-transform: uppercase;
+
+  &__list {
+    display: flex;
+    list-style: none;
+  }
+
+  &__link {
+    letter-spacing: 3px;
+    margin-left: 32px;
+
+    a {
+      color: white;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      opacity: 0.7;
+    }
+
+  }
+}
+
+.logo {
+  font-size: 32px;
+  letter-spacing: 4px;
+
+  a {
+    color: white;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+
+  a:hover {
+    opacity: 0.7;
+  }
+}

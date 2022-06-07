@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import 'normalize.css';
-import './SaborForm.css';
+import styles from './Sabores.module.scss';
 import Axios from 'axios';
 
 interface Sabor {
@@ -10,13 +9,13 @@ interface Sabor {
   tipo: number;
 }
 
-function SaborForm() {
+export default function Sabores() {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [ingredient, setIngredient] = useState("");
   const [type, setType] = useState(0);
-  
-  
+
+
   const [saborList, setSaborList] = useState<Sabor[]>([]);
 
   const addSabor = () => {
@@ -32,13 +31,13 @@ function SaborForm() {
 
   const getSabores = () => {
     Axios.get('http://localhost:3001/sabor/list').then((response) => {
-        setSaborList(response.data);
+      setSaborList(response.data);
     });
   };
 
   return (
-    <div className="App">
-      <div className="information">
+    <div className={styles.App}>
+      <div className={styles.information}>
         <label>Name</label>
         <input
           type="text"
@@ -65,12 +64,12 @@ function SaborForm() {
           }} />
         <button onClick={addSabor}>Add Sabor</button>
       </div>
-      <div className="flavors">
+      <div className={styles.flavors}>
         <button onClick={getSabores}>Show Sabores</button>
 
         {saborList.map((val, key) => {
           return (
-            <div className="flavor"key={key}>
+            <div className={styles.flavor} key={key}>
               <h3>Name: {val.nome}</h3>
               <h3>Preço: {val.preco}</h3>
               <h3>Ingrediente: {val.ingrediente}</h3>
@@ -82,5 +81,3 @@ function SaborForm() {
     </div>
   )
 }
-
-export default SaborForm;

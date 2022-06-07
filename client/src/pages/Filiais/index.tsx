@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import 'normalize.css';
-import './FilialForm.css';
+import style from './Filiais.module.scss';
 import Axios from 'axios';
 
 interface Filial {
@@ -8,7 +7,7 @@ interface Filial {
   endereco: string
 }
 
-function FilialForm() {
+export default function FilialForm() {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
 
@@ -25,13 +24,13 @@ function FilialForm() {
 
   const getFiliais = () => {
     Axios.get('http://localhost:3001/filial/list').then((response) => {
-        setFilialList(response.data);
+      setFilialList(response.data);
     });
   };
 
   return (
-    <div className="App">
-      <div className="information">
+    <div className={style.App}>
+      <div className={style.information}>
         <label>Name</label>
         <input
           type="text"
@@ -46,12 +45,12 @@ function FilialForm() {
           }} />
         <button onClick={addFilial}>Add Filial</button>
       </div>
-      <div className="filiais">
+      <div className={style.filiais}>
         <button onClick={getFiliais}>Show Filiais</button>
 
         {filialList.map((val, key) => {
           return (
-            <div className="filial"key={key}>
+            <div className={style.filial} key={key}>
               <h3>Name: {val.nome}</h3>
               <h3>Filial: {val.endereco}</h3>
             </div>
@@ -61,5 +60,3 @@ function FilialForm() {
     </div>
   )
 }
-
-export default FilialForm;

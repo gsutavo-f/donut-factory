@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import 'normalize.css';
-import './FuncionarioForm.css';
+import styles from './Funcionarios.module.scss';
 import Axios from 'axios';
 
 interface Funcionario {
@@ -11,7 +10,7 @@ interface Funcionario {
   codfilial: number
 }
 
-function FuncionarioForm() {
+export default function Funcionarios() {
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const [position, setPosition] = useState("");
@@ -39,8 +38,8 @@ function FuncionarioForm() {
   };
 
   return (
-    <div className="App">
-      <div className="information">
+    <div className={styles.App}>
+      <div className={styles.information}>
         <label>Name</label>
         <input
           type="text"
@@ -73,12 +72,12 @@ function FuncionarioForm() {
           }} />
         <button onClick={addFuncionario}>Add Employee</button>
       </div>
-      <div className="employees">
+      <div className={styles.employees}>
         <button onClick={getEmployees}>Show Employees</button>
 
         {employeeList.map((val, key) => {
           return (
-            <div className="employee" key={key}>
+            <div className={styles.employee} key={key}>
               <h3>Name: {val.nome}</h3>
               <h3>Document: {val.cpf}</h3>
               <h3>Position: {val.cargo}</h3>
@@ -91,5 +90,3 @@ function FuncionarioForm() {
     </div>
   )
 }
-
-export default FuncionarioForm
