@@ -124,6 +124,21 @@ app.put("/sabor/update", (req, res) => {
     );
 });
 
+app.delete("/sabor/delete/:id", (req, res) => {
+    const id = req.params.id;
+    db.query(
+        "delete from sabordonut where codigo = ?",
+        id,
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
 app.post('/cliente/create', (req, res) => {
     const name = req.body.name;
     const cpf = req.body.cpf;
