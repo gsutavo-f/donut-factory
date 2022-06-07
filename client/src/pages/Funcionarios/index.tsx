@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import styles from './Funcionarios.module.scss';
 import Axios from 'axios';
+import Modal from 'react-modal';
+import FuncionariosForm from './FuncionariosForm';
 
 interface Funcionario {
   nome: string,
@@ -10,12 +12,16 @@ interface Funcionario {
   codfilial: number
 }
 
+Modal.setAppElement('#root');
+
 export default function Funcionarios() {
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const [position, setPosition] = useState("");
   const [salary, setSalary] = useState(0);
   const [filial, setFilial] = useState(0);
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const [employeeList, setEmployeeList] = useState<Funcionario[]>([]);
 
@@ -39,42 +45,34 @@ export default function Funcionarios() {
 
   return (
     <div className={styles.App}>
-      <div className={styles.information}>
-        <label>Name</label>
-        <input
-          type="text"
-          onChange={(event) => {
-            setName(event.target.value);
-          }} />
-        <label>Document</label>
-        <input
-          type="text"
-          onChange={(event) => {
-            setCpf(event.target.value);
-          }} />
-        <label>Position</label>
-        <input
-          type="text"
-          onChange={(event) => {
-            setPosition(event.target.value);
-          }} />
-        <label>Salary</label>
-        <input
-          type="number"
-          onChange={(event) => {
-            setSalary(event.target.valueAsNumber);
-          }} />
-        <label>Filial</label>
-        <input
-          type="number"
-          onChange={(event) => {
-            setFilial(event.target.valueAsNumber);
-          }} />
-        <button onClick={addFuncionario}>Add Employee</button>
+      <div className={styles.botao}>
+        <button onClick={() => setModalIsOpen(true)}>
+          Adicionar novo funcionário
+        </button>
+        <button onClick={getEmployees}>
+          Listar funcionários
+        </button>
       </div>
-      <div className={styles.employees}>
-        <button onClick={getEmployees}>Show Employees</button>
 
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+      >
+        <FuncionariosForm
+          name={name}
+          setName={setName}
+          cpf={cpf}
+          setCpf={setCpf}
+          position={position}
+          setPosition={setPosition}
+          salary={salary}
+          setSalary={setSalary}
+          filial={filial}
+          setFilial={setFilial}
+        />
+      </Modal>
+
+      <div className={styles.employees}>
         {employeeList.map((val, key) => {
           return (
             <div className={styles.employee} key={key}>
