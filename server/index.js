@@ -108,36 +108,52 @@ app.get("/sabor/list", (req, res) => {
     );
 });
 
-app.post('/cliente/create', (req, res) => {
-  const name = req.body.name;
-  const cpf = req.body.cpf;
-  const phone = req.body.phone;
-  const address = req.body.address;
+app.put("/sabor/update", (req, res) => {
+    const id = req.body.id;
+    const price = req.body.price;
+    db.query(
+        "update sabordonut set preco = ? where codigo = ?",
+        [price, id],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
 
-  db.query(
-      "insert into cliente (nome, cpf, telefone, endereco) values (?,?,?,?)",
-      [name, cpf, phone, address],
-      (err, result) => {
-          if (err) {
-              console.log(err);
-          } else {
-              res.send("Values Inserted");
-          }
-      }
-  );
+app.post('/cliente/create', (req, res) => {
+    const name = req.body.name;
+    const cpf = req.body.cpf;
+    const phone = req.body.phone;
+    const address = req.body.address;
+
+    db.query(
+        "insert into cliente (nome, cpf, telefone, endereco) values (?,?,?,?)",
+        [name, cpf, phone, address],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("Values Inserted");
+            }
+        }
+    );
 });
 
 app.get("/cliente/list", (req, res) => {
-  db.query(
-      "select * from cliente",
-      (err, result) => {
-          if (err) {
-              console.log(err);
-          } else {
-              res.send(result);
-          }
-      }
-  );
+    db.query(
+        "select * from cliente",
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
 });
 
 app.listen(3001, () => {
