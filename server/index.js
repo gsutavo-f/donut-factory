@@ -202,6 +202,37 @@ app.get("/cliente/list", (req, res) => {
     );
 });
 
+app.put("/cliente/update", (req, res) => {
+    const id = req.body.id;
+    const phone = req.body.phone;
+    db.query(
+        "update cliente set telefone = ? where codigo = ?",
+        [phone, id],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
+app.delete("/cliente/delete/:id", (req, res) => {
+    const id = req.params.id;
+    db.query(
+        "delete from cliente where codigo = ?",
+        id,
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
 app.post('/compra/create', (req, res) => {
     const precototal = req.body.precoTotal;
     const codcliente = req.body.codCliente;

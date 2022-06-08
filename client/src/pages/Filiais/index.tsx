@@ -90,7 +90,7 @@ export default function FilialForm() {
                     setNewAddress(event.target.value);
                   }}
                 />
-                <button onClick={() => { updateAddress(val.codigo) }}>Update Price</button>
+                <button onClick={() => { updateAddress(val.codigo) }}>Update Address</button>
                 <button onClick={() => { deleteFilial(val.codigo) }}>Delete</button>
               </div>
             </div>
