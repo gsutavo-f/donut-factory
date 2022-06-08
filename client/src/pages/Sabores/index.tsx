@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './Sabores.module.scss';
 import Axios from 'axios';
+import Select from 'react-select';
 
 interface Sabor {
   codigo: number,
@@ -10,6 +11,17 @@ interface Sabor {
   ingrediente: string,
   tipo: number;
 }
+
+const tipos = [
+  {
+    value: 0,
+    label: "Doce"
+  },
+  {
+    value: 1,
+    label: "Salgado"
+  }
+]
 
 export default function Sabores() {
   const [name, setName] = useState("");
@@ -86,11 +98,15 @@ export default function Sabores() {
             setIngredient(event.target.value);
           }} />
         <label>Type</label>
-        <input
-          type="number"
+        <Select
+          className={styles.combobox}
+          placeholder="Select type"
+          value={tipos.find(obj => obj.value === type)}
+          options={tipos}
           onChange={(event) => {
-            setType(event.target.valueAsNumber);
-          }} />
+            setType(event!.value);
+          }}
+        />
         <button onClick={addSabor}>Add Sabor</button>
       </div>
       <div className={styles.flavors}>
