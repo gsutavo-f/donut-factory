@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import styles from './Sabores.module.scss';
 import Axios from 'axios';
-import Select from 'react-select';
+import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
+import Modal from '../../components/Modal';
+import SaboresForm from './SaboresForm';
 
 interface Sabor {
   codigo: number,
@@ -12,36 +13,16 @@ interface Sabor {
   tipo: number;
 }
 
-const tipos = [
-  {
-    value: 0,
-    label: "Doce"
-  },
-  {
-    value: 1,
-    label: "Salgado"
-  }
-]
-
 export default function Sabores() {
   const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState(0.0);
   const [ingredient, setIngredient] = useState("");
   const [type, setType] = useState(0);
   const [newPrice, setNewPrice] = useState(0);
 
-  const [saborList, setSaborList] = useState<Sabor[]>([]);
+  const [openModal, setOpenModal] = useState(false);
 
-  const addSabor = () => {
-    Axios.post('http://localhost:3001/sabor/create', {
-      name: name,
-      price: price,
-      ingredient: ingredient,
-      type: type
-    }).then(() => {
-      console.log("sucess");
-    });
-  };
+  const [saborList, setSaborList] = useState<Sabor[]>([]);
 
   const getSabores = () => {
     Axios.get('http://localhost:3001/sabor/list').then((response) => {
@@ -77,65 +58,65 @@ export default function Sabores() {
   }
 
   return (
-    <div className={styles.App}>
-      <div className={styles.information}>
-        <label>Name</label>
-        <input
-          type="text"
-          onChange={(event) => {
-            setName(event.target.value);
-          }} />
-        <label>Price</label>
-        <input
-          type="number"
-          onChange={(event) => {
-            setPrice(event.target.valueAsNumber);
-          }} />
-        <label>Ingredient</label>
-        <input
-          type="text"
-          onChange={(event) => {
-            setIngredient(event.target.value);
-          }} />
-        <label>Type</label>
-        <Select
-          className={styles.combobox}
-          placeholder="Select type"
-          value={tipos.find(obj => obj.value === type)}
-          options={tipos}
-          onChange={(event) => {
-            setType(event!.value);
-          }}
-        />
-        <button onClick={addSabor}>Add Sabor</button>
+    <>
+      <div className={stylesTema.paginas}>
+        <div className={stylesTema.paginas__botoes}>
+          <button
+            onClick={() => setOpenModal(true)}
+            className={stylesTema.paginas__botoes__botao}
+          >
+            Adicionar novo sabor
+          </button>
+          <button
+            onClick={getSabores}
+            className={stylesTema.paginas__botoes__botao}
+          >
+            Listar sabores
+          </button>
+        </div>
+        <div className={stylesTema.paginas__lista}>
+          {saborList.map((val, key) => {
+            return (
+              <div className={stylesTema.paginas__lista__pagina} key={key}>
+                <div>
+                  <h3>Name: {val.nome}</h3>
+                  <h3>Preço: {val.preco}</h3>
+                  <h3>Ingrediente: {val.ingrediente}</h3>
+                  <h3>Tipo: {val.tipo}</h3>
+                </div>
+                <div>
+                  <input
+                    type="number"
+                    onChange={(event) => {
+                      setNewPrice(event.target.valueAsNumber);
+                    }}
+                  />
+                  <button onClick={() => { updatePrice(val.codigo) }}>Update Price</button>
+                  <button onClick={() => { deleteSabor(val.codigo) }}>Delete</button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
-      <div className={styles.flavors}>
-        <button onClick={getSabores}>Show Sabores</button>
 
-        {saborList.map((val, key) => {
-          return (
-            <div className={styles.flavor} key={key}>
-              <div>
-                <h3>Name: {val.nome}</h3>
-                <h3>Preço: {val.preco}</h3>
-                <h3>Ingrediente: {val.ingrediente}</h3>
-                <h3>Tipo: {val.tipo}</h3>
-              </div>
-              <div>
-                <input
-                  type="number"
-                  placeholder="price"
-                  onChange={(event) => {
-                    setNewPrice(event.target.valueAsNumber);
-                  }}
-                />
-                <button onClick={() => { updatePrice(val.codigo) }}>Update Price</button>
-                <button onClick={() => { deleteSabor(val.codigo) }}>Delete</button>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div >
-  )
+      {openModal
+        && <Modal
+          titulo='Adicione um funcionário'
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+        >
+          <SaboresForm
+            name={name}
+            setName={setName}
+            price={price}
+            setPrice={setPrice}
+            ingredient={ingredient}
+            setIngredient={setIngredient}
+            type={type}
+            setType={setType}
+          />
+        </Modal>}
+    </>
+  );
 }
