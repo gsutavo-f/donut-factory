@@ -42,11 +42,26 @@ export default function Sabores() {
       (response) => {
         setSaborList(saborList.map((val) => {
           return val.codigo == id
-            ? { codigo: val.codigo, nome: val.nome, preco: newPrice, numvendas: val.numvendas, ingrediente: val.ingrediente, tipo: val.tipo }
+            ? {
+              codigo: val.codigo,
+              nome: val.nome,
+              preco: newPrice,
+              numvendas: val.numvendas,
+              ingrediente: val.ingrediente,
+              tipo: val.tipo
+            }
             : val
         }))
       }
     )
+  }
+
+  const deleteSabor = (id: number) => {
+    Axios.delete(`http://localhost:3001/sabor/delete/${id}`).then((response) => {
+      setSaborList(saborList.filter((val) => {
+        return val.codigo != id
+      }))
+    });
   }
 
   return (
@@ -99,11 +114,12 @@ export default function Sabores() {
                   }}
                 />
                 <button onClick={() => { updatePrice(val.codigo) }}>Update Price</button>
+                <button onClick={() => { deleteSabor(val.codigo) }}>Delete</button>
               </div>
             </div>
           );
         })}
       </div>
-    </div>
+    </div >
   )
 }
