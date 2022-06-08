@@ -63,7 +63,7 @@ export default function Compras() {
                         setPrecoTotal(event.target.valueAsNumber);
                     }} />
                 <label>Cliente</label>
-                <Select 
+                <Select
                     className={styles.combobox}
                     placeholder="Select Cliente"
                     value={clientesList.find(obj => obj.value === codCliente)}

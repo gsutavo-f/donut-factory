@@ -4,8 +4,8 @@ import donutImage from './donut.png';
 
 function Donut() {
     return (
-        <div className="donut">
-            <img src={donutImage}/>
+        <div className="donut" onDragStart={(e) => e.preventDefault()}>
+            <img src={donutImage} onDragStart={(e) => e.preventDefault()}/>
         </div> 
     )
 }

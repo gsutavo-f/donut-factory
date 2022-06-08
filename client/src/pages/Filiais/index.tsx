@@ -19,15 +19,6 @@ export default function Filiais() {
   const [filialList, setFilialList] = useState<Filial[]>([]);
   const [newAddress, setNewAddress] = useState("");
 
-  const addFilial = () => {
-    Axios.post('http://localhost:3001/filial/create', {
-      name: name,
-      address: address
-    }).then(() => {
-      console.log("sucess");
-    });
-  }
-
   const getFiliais = () => {
     Axios.get('http://localhost:3001/filial/list').then((response) => {
       setFilialList(response.data);

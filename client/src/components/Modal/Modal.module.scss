@@ -29,6 +29,7 @@
     align-items: center;
     justify-content: space-around;
     text-transform: uppercase;
+    user-select: none;
 
     &__titulo {
       color: #58C0FF;
