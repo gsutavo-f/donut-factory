@@ -1,0 +1,13 @@
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.donut {
+    animation: rotate linear infinite 15s;
+}
