@@ -171,6 +171,74 @@ app.get("/cliente/list", (req, res) => {
     );
 });
 
+app.post('/compra/create', (req, res) => {
+    const precototal = req.body.precoTotal;
+    const codcliente = req.body.codCliente;
+
+    db.query(
+        "insert into compra (precototal, datacompra, codcliente) values (?,?,?)",
+        [precototal, new Date(), codcliente],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+        }
+    );
+
+    db.query(
+        "update cliente set numcompras = numcompras + 1 where cliente.codigo = ?",
+        codcliente,
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("Values Inserted");
+            }
+        }
+    );
+});
+
+app.get('/compra/list', (req, res) => {
+    db.query(
+        "select * from compra",
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
+app.delete("/compra/delete/:id", (req, res) => {
+    const id = req.params.id;
+    db.query(
+        "delete from compra where codigo = ?",
+        id,
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
+app.get("/compra/listClientes", (req, res) => {
+    db.query(
+        "select codigo as value, nome as label from cliente",
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    )
+})
+
 app.listen(3001, () => {
     console.log("Running...");
 });

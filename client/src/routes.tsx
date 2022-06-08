@@ -6,6 +6,7 @@ import Filiais from './pages/Filiais';
 import Sabores from './pages/Sabores';
 import Funcionarios from './pages/Funcionarios';
 import Clientes from './pages/Clientes';
+import Compras from './pages/Compras';
 
 export default function AppRouter() {
   return (
@@ -19,6 +20,7 @@ export default function AppRouter() {
             <Route path='sabor' element={<Sabores />} />
             <Route path='funcionario' element={<Funcionarios />} />
             <Route path='cliente' element={<Clientes />} />
+            <Route path='compra' element={<Compras />} />
           </Route>
         </Routes>
       </Router>
