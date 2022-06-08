@@ -1,72 +1,48 @@
-.App {
+.funcionarios {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+  flex-direction: row;
+  justify-content: space-around;
 
-.information {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-}
+  &__botoes {
+    display: flex;
+    align-items: center;
+    width: 25vw;
+    height: 92vh;
+    flex-direction: column;
+    justify-content: center;
 
-.information input {
-  width: 300px;
-  height: 50px;
-  font-size: 20px;
-  padding-left: 10px;
-  margin: 5px;
-}
-
-button {
-  width: 320px;
-  height: 50px;
-  margin-top: 15px;
-}
-
-button:hover {
-  cursor: pointer;
-}
-
-.employees {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-.employee {
-  width: 700px;
-  height: auto;
-  border: 1px solid black;
-  font-family: 'Courier New', Courier, monospace;
-  margin: 10px;
-  display: flex;
-  padding: 10px;
-}
-
-.employee h3 {
-  margin: 20px;
-}
-
-.botao {
-  display: flex;
-  align-items: center;
-  width: 25vw;
-  height: 92vh;
-  flex-direction: column;
-  justify-content: center;
-
-  button {
-    box-shadow: rgb(209 209 209 / 52%) 4px 5px 3px 0px, rgb(150 150 150 / 20%) 0px -12px 30px, rgb(117 117 117 / 20%) 0px 4px 6px, rgb(181 181 181 / 20%) 0px 12px 13px, rgb(150 150 150 / 20%) 0px -3px 5px;
-    background-color: #ED91AD;
-    border: none;
-    border-radius: 10px;
-    font-family: 'Anton', serif;
-    letter-spacing: 2px;
-    color: white;
-    text-transform: uppercase;
+    &__botao {
+      box-shadow: rgb(209 209 209 / 52%) 4px 5px 3px 0px, rgb(150 150 150 / 20%) 0px -12px 30px, rgb(117 117 117 / 20%) 0px 4px 6px, rgb(181 181 181 / 20%) 0px 12px 13px, rgb(150 150 150 / 20%) 0px -3px 5px;
+      background-color: #ED91AD;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Anton', serif;
+      letter-spacing: 2px;
+      color: white;
+      text-transform: uppercase;
+    }
   }
 
+  &__lista {
+    margin-top: 60px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 700px;
+    align-content: flex-start;
+
+    h3 {
+      margin: 20px;
+    }
+
+    &__funcionario {
+      width: 700px;
+      height: 110px;
+      border: 1px solid black;
+      font-family: 'Courier New', Courier, monospace;
+      margin: 10px;
+      display: flex;
+      padding: 10px;
+      background-color: #FCE4D8;
+    }
+  }
 }

@@ -44,14 +44,35 @@ export default function Funcionarios() {
   };
 
   return (
-    <div className={styles.App}>
-      <div className={styles.botao}>
-        <button onClick={() => setModalIsOpen(true)}>
-          Adicionar novo funcionário
-        </button>
-        <button onClick={getEmployees}>
-          Listar funcionários
-        </button>
+    <>
+      <div className={styles.funcionarios}>
+        <div className={styles.funcionarios__botoes}>
+          <button
+            onClick={() => setModalIsOpen(true)}
+            className={styles.funcionarios__botoes__botao}
+          >
+            Adicionar novo funcionário
+          </button>
+          <button
+            onClick={getEmployees}
+            className={styles.funcionarios__botoes__botao}
+          >
+            Listar funcionários
+          </button>
+        </div>
+        <div className={styles.funcionarios__lista}>
+          {employeeList.map((val, key) => {
+            return (
+              <div className={styles.funcionarios__lista__funcionario} key={key}>
+                <h3>Name: {val.nome}</h3>
+                <h3>Document: {val.cpf}</h3>
+                <h3>Position: {val.cargo}</h3>
+                <h3>Salary: {val.salario}</h3>
+                <h3>Filial: {val.codfilial}</h3>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       <Modal
@@ -71,20 +92,6 @@ export default function Funcionarios() {
           setFilial={setFilial}
         />
       </Modal>
-
-      <div className={styles.employees}>
-        {employeeList.map((val, key) => {
-          return (
-            <div className={styles.employee} key={key}>
-              <h3>Name: {val.nome}</h3>
-              <h3>Document: {val.cpf}</h3>
-              <h3>Position: {val.cargo}</h3>
-              <h3>Salary: {val.salario}</h3>
-              <h3>Filial: {val.codfilial}</h3>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    </>
   )
 }
