@@ -74,7 +74,38 @@ app.get("/filial/list", (req, res) => {
             }
         }
     );
-})
+});
+
+app.put("/filial/update", (req, res) => {
+    const address = req.body.address;
+    const id = req.body.id;
+    db.query(
+        "update filial set endereco = ? where codigo = ?",
+        [address, id],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
+app.delete("/filial/delete/:id", (req, res) => {
+    const id = req.params.id;
+    db.query(
+        "delete from filial where codigo = ?",
+        id,
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
 
 app.post('/sabor/create', (req, res) => {
     const name = req.body.name;
