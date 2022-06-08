@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import styles from './FuncionariosForm.module.scss';
 
 interface IFuncionariosForm {
   name: string;
@@ -44,7 +45,6 @@ export default function FuncionariosForm(
         name="nome"
         value={name}
         onChange={(event) => setName(event.target.value)}
-        placeholder="Nome completo"
         required
       />
       <label htmlFor="cpf">
@@ -55,7 +55,6 @@ export default function FuncionariosForm(
         name="cpf"
         value={cpf}
         onChange={(event) => setCpf(event.target.value)}
-        placeholder="Apenas números"
         required
       />
       <label htmlFor="cargo">
@@ -86,10 +85,9 @@ export default function FuncionariosForm(
         name="filial"
         value={filial}
         onChange={(event) => setFilial(event.target.valueAsNumber)}
-        placeholder="Código da filial"
         required
       />
-      <button type="submit">
+      <button className={styles.botao} type="submit">
         Adicionar funcionário
       </button>
     </form>

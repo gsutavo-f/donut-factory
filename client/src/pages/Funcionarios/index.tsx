@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import styles from './Funcionarios.module.scss';
+import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
 import Axios from 'axios';
-import Modal from 'react-modal';
+import Modal from '../../components/Modal';
 import FuncionariosForm from './FuncionariosForm';
 
 interface Funcionario {
@@ -12,8 +12,6 @@ interface Funcionario {
   codfilial: number
 }
 
-Modal.setAppElement('#root');
-
 export default function Funcionarios() {
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
@@ -21,21 +19,9 @@ export default function Funcionarios() {
   const [salary, setSalary] = useState(0);
   const [filial, setFilial] = useState(0);
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const [employeeList, setEmployeeList] = useState<Funcionario[]>([]);
-
-  const addFuncionario = () => {
-    Axios.post('http://localhost:3001/funcionario/create', {
-      name: name,
-      cpf: cpf,
-      position: position,
-      salary: salary,
-      filial: filial
-    }).then(() => {
-      console.log("sucess");
-    });
-  };
 
   const getEmployees = () => {
     Axios.get('http://localhost:3001/funcionario/list').then((response) => {
@@ -45,25 +31,25 @@ export default function Funcionarios() {
 
   return (
     <>
-      <div className={styles.funcionarios}>
-        <div className={styles.funcionarios__botoes}>
+      <div className={stylesTema.paginas}>
+        <div className={stylesTema.paginas__botoes}>
           <button
-            onClick={() => setModalIsOpen(true)}
-            className={styles.funcionarios__botoes__botao}
+            onClick={() => setOpenModal(true)}
+            className={stylesTema.paginas__botoes__botao}
           >
             Adicionar novo funcionário
           </button>
           <button
             onClick={getEmployees}
-            className={styles.funcionarios__botoes__botao}
+            className={stylesTema.paginas__botoes__botao}
           >
             Listar funcionários
           </button>
         </div>
-        <div className={styles.funcionarios__lista}>
+        <div className={stylesTema.paginas__lista}>
           {employeeList.map((val, key) => {
             return (
-              <div className={styles.funcionarios__lista__funcionario} key={key}>
+              <div className={stylesTema.paginas__lista__pagina} key={key}>
                 <h3>Name: {val.nome}</h3>
                 <h3>Document: {val.cpf}</h3>
                 <h3>Position: {val.cargo}</h3>
@@ -75,23 +61,25 @@ export default function Funcionarios() {
         </div>
       </div>
 
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
-      >
-        <FuncionariosForm
-          name={name}
-          setName={setName}
-          cpf={cpf}
-          setCpf={setCpf}
-          position={position}
-          setPosition={setPosition}
-          salary={salary}
-          setSalary={setSalary}
-          filial={filial}
-          setFilial={setFilial}
-        />
-      </Modal>
+      {openModal
+        && <Modal
+          titulo='Adicione um funcionário'
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+        >
+          <FuncionariosForm
+            name={name}
+            setName={setName}
+            cpf={cpf}
+            setCpf={setCpf}
+            position={position}
+            setPosition={setPosition}
+            salary={salary}
+            setSalary={setSalary}
+            filial={filial}
+            setFilial={setFilial}
+          />
+        </Modal>}
     </>
   )
 }

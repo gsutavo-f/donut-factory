@@ -1,0 +1,25 @@
+.botao {
+  background-color: #ED91AD;
+  border: none;
+  border-radius: 10px;
+  letter-spacing: 2.5px;
+  color: white;
+  text-transform: uppercase;
+}
+
+label {
+  padding-top: 10px;
+  color: #3f3034;
+  text-transform: uppercase;
+}
+
+input {
+  border: none;
+  border-radius: 10px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
