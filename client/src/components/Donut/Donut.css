@@ -11,3 +11,8 @@
 .donut {
     animation: rotate linear infinite 15s;
 }
+
+.donut img {
+    width: 300px;
+    height: 300px;
+}
