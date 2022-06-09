@@ -3,7 +3,7 @@ import styles from './Menu.module.scss';
 
 export default function Menu() {
   const rotas = [{
-    label: 'Filial',
+    label: 'Filiais',
     to: '/filial'
   }, {
     label: 'Sabores',

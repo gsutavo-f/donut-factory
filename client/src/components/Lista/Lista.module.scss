@@ -9,33 +9,37 @@
     &__linha {
       font-weight: 500;
       text-align: center;
+      color: bisque;
       font-size: larger;
       padding-bottom: 10px;
       border-bottom: 2px solid white;
     }
   }
 
-  td {
-    text-align: center;
-    padding: 15px;
-  }
-}
+  &__body {
+    &__linha {
 
-.icones {
-  display: flex;
-  align-items: center;
+      &__info {
+        text-align: center;
+        padding: 15px 10px 0 10px;
+        color: #363434
+      }
 
-  td {
-    padding: 5px;
+      &__icones {
 
-  }
 
-  img {
-    transform: 3s;
-  }
+        td {
+          padding: 15px 2.5px 0 2.5px;
 
-  img:hover {
-    cursor: pointer;
-    opacity: 0.7;
+        }
+
+        img:hover {
+          cursor: pointer;
+          opacity: 0.7;
+        }
+
+      }
+    }
+
   }
 }
