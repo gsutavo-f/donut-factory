@@ -45,7 +45,7 @@ export default function ComprasForm(
         Preço total
       </label>
       <input
-        type="text"
+        type="number"
         name="precoTotal"
         value={precoTotal}
         onChange={(event) => setPrecoTotal(event.target.valueAsNumber)}
