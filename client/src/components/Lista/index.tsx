@@ -23,9 +23,9 @@ export default function Lista({ colunas, lista, apagar, pagina, update }: Props)
       </thead>
       <tbody className={styles.tabela__body}>
         {lista.map((item, index) => (
-          <tr key={index}>
+          <tr key={index} className={styles.tabela__body__linha}>
             {colunas.map((coluna, key) => (
-              <td key={key}>
+              <td key={key} className={styles.tabela__body__linha__info}>
                 {coluna == 'tipo'
                   && `${pagina}` == 'sabores' ?
                   item[`${coluna}`] == 0 ? 'doce' : 'salgado'
@@ -33,7 +33,7 @@ export default function Lista({ colunas, lista, apagar, pagina, update }: Props)
                 }
               </td>
             ))}
-            <div className={styles.icones}>
+            <div className={styles.tabela__body__linha__icones}>
               {`${update}` != undefined &&
                 <td>
                   <img src={editIcon} onClick={() => update!(item.codigo)}></img>
