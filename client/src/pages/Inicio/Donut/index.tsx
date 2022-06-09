@@ -5,7 +5,7 @@ import donutImage from './donut.png';
 
 export default function Donut() {
   return (
-    <div className={stylesTema.paginas}>
+    <>
       <div
         className='donut'
         onDragStart={(e) => e.preventDefault()}
@@ -15,6 +15,6 @@ export default function Donut() {
           onDragStart={(e) => e.preventDefault()}
         />
       </div>
-    </div>
+    </>
   )
 }
