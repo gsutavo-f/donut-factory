@@ -1,4 +1,4 @@
-import Donut from '../../components/Donut';
+import Donut from './Donut';
 import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
 import styles from './Inicio.module.scss';
 

@@ -3,6 +3,8 @@ import Axios from 'axios';
 import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
 import Modal from '../../components/Modal';
 import SaboresForm from './SaboresForm';
+import Lista from '../../components/Lista';
+import { Colunas } from '../../interfaces';
 
 interface Sabor {
   codigo: number,
@@ -10,7 +12,7 @@ interface Sabor {
   preco: number,
   numvendas: number,
   ingrediente: string,
-  tipo: number;
+  tipo: number | string;
 }
 
 export default function Sabores() {
@@ -23,6 +25,8 @@ export default function Sabores() {
   const [openModal, setOpenModal] = useState(false);
 
   const [saborList, setSaborList] = useState<Sabor[]>([]);
+
+  const colunas: string[] = ['nome', 'preco', 'ingrediente', 'tipo'];
 
   const getSabores = () => {
     Axios.get('http://localhost:3001/sabor/list').then((response) => {
@@ -75,7 +79,18 @@ export default function Sabores() {
           </button>
         </div>
         <div className={stylesTema.paginas__lista}>
-          {saborList.map((val, key) => {
+
+          <Lista
+            colunas={colunas}
+            lista={saborList}
+            apagar={deleteSabor}
+            update={updatePrice}
+            pagina='sabores'
+          />
+
+
+
+          {/* {saborList.map((val, key) => {
             return (
               <div className={stylesTema.paginas__lista__pagina} key={key}>
                 <div>
@@ -96,7 +111,7 @@ export default function Sabores() {
                 </div>
               </div>
             );
-          })}
+          })} */}
         </div>
       </div>
 

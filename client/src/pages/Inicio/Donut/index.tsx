@@ -1,5 +1,5 @@
 import React from 'react';
-import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
+import stylesTema from '../../../components/PaginaPadrao/PaginaPadrao.module.scss';
 import './Donut.css';
 import donutImage from './donut.png';
 

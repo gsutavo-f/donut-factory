@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import Select from 'react-select';
 import styles from '../../../styles/Formulario.module.scss';
-import { Cliente } from '../../../interfaces/Cliente';
+import { Cliente } from '../../../interfaces';
 
 interface IComprasForm {
   precoTotal: number;
