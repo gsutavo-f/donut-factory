@@ -9,15 +9,16 @@
 .paginas {
   display: flex;
   flex-direction: row;
+  height: 92vh;
   justify-content: space-around;
 
   &__botoes {
+    margin: 90px 30px;
     display: flex;
     align-items: center;
     width: 25vw;
-    height: 92vh;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
 
     &__botao {
       box-shadow: rgb(209 209 209 / 52%) 4px 5px 3px 0px, rgb(150 150 150 / 20%) 0px -12px 30px, rgb(117 117 117 / 20%) 0px 4px 6px, rgb(181 181 181 / 20%) 0px 12px 13px, rgb(150 150 150 / 20%) 0px -3px 5px;
@@ -30,7 +31,7 @@
       user-select: none;
       width: 320px;
       height: 50px;
-      margin-top: 15px;
+      margin-bottom: 10px;
     }
 
     &__botao:hover {
@@ -39,11 +40,17 @@
   }
 
   &__lista {
-    margin-top: 60px;
+    margin: 50px 30px;
     display: flex;
+    overflow: auto;
     flex-wrap: wrap;
     width: 700px;
     align-content: flex-start;
+    justify-content: center;
+    opacity: 0.95;
+    background-color: #ed91ad;
+    border-radius: 50px;
+    box-shadow: rgb(209 209 209 / 52%) 4px 5px 3px 0px, rgb(150 150 150 / 20%) 0px -12px 30px, rgb(117 117 117 / 20%) 0px 4px 6px, rgb(181 181 181 / 20%) 0px 12px 13px, rgb(150 150 150 / 20%) 0px -3px 5px;
 
     h3 {
       margin: 20px;

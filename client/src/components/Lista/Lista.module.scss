@@ -1,16 +1,41 @@
 .tabela {
   text-transform: uppercase;
-
-  width: 600px;
   padding: 20px 20px;
+  border-spacing: 0;
 
   &__header {
-    border: 50px solid black;
-    background-color: aquamarine;
+
+
+    &__linha {
+      font-weight: 500;
+      text-align: center;
+      font-size: larger;
+      padding-bottom: 10px;
+      border-bottom: 2px solid white;
+    }
   }
 
   td {
     text-align: center;
-    padding-top: 15px;
+    padding: 15px;
+  }
+}
+
+.icones {
+  display: flex;
+  align-items: center;
+
+  td {
+    padding: 5px;
+
+  }
+
+  img {
+    transform: 3s;
+  }
+
+  img:hover {
+    cursor: pointer;
+    opacity: 0.7;
   }
 }

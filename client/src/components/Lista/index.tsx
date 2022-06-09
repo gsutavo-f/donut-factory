@@ -1,4 +1,6 @@
 import styles from './Lista.module.scss';
+import deleteIcon from './delete.png';
+import editIcon from './edit.png';
 
 interface Props {
   pagina?: string;
@@ -15,7 +17,7 @@ export default function Lista({ colunas, lista, apagar, pagina, update }: Props)
       <thead className={styles.tabela__header}>
         <tr>
           {colunas.map((coluna, index) => (
-            <th key={index}> {coluna}</th>
+            <th key={index} className={styles.tabela__header__linha}> {coluna}</th>
           ))}
         </tr>
       </thead>
@@ -31,14 +33,16 @@ export default function Lista({ colunas, lista, apagar, pagina, update }: Props)
                 }
               </td>
             ))}
-            <td>
-              <button onClick={() => apagar(item.codigo)}>apagar</button>
-            </td>
-            {`${update}` != undefined &&
+            <div className={styles.icones}>
+              {`${update}` != undefined &&
+                <td>
+                  <img src={editIcon} onClick={() => update!(item.codigo)}></img>
+                </td>
+              }
               <td>
-                <button onClick={() => update!(item.codigo)}>update</button>
+                <img src={deleteIcon} onClick={() => apagar(item.codigo)}></img>
               </td>
-            }
+            </div>
           </tr>
         ))}
       </tbody>
