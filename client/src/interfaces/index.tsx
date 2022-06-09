@@ -17,3 +17,10 @@ export interface Colunas {
   valor: string | number;
 }
 
+export interface Compra {
+  codigo: number,
+  codcliente: number,
+  precototal: number,
+  datacompra: string
+}
+

@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import Select from 'react-select';
 import styles from '../../../styles/Formulario.module.scss';
-import { Cliente } from '../../../interfaces';
+import { Cliente, Compra } from '../../../interfaces';
 
 interface IComprasForm {
   precoTotal: number;
@@ -9,12 +9,13 @@ interface IComprasForm {
   codCliente: number;
   setCodCliente: React.Dispatch<React.SetStateAction<number>>;
   clientesList: Cliente[];
+  getCompras: React.Dispatch<React.SetStateAction<Compra[]>>;
 }
 
 export default function ComprasForm(
   { precoTotal, setPrecoTotal,
     codCliente, setCodCliente,
-    clientesList }: IComprasForm) {
+    clientesList, getCompras }: IComprasForm) {
 
   function adicionarCompra(evento: React.FormEvent<HTMLFormElement>) {
     evento.preventDefault();
@@ -25,6 +26,7 @@ export default function ComprasForm(
     }).then(() => {
       console.log("sucess");
     });
+    getCompras;
   }
 
   return (
@@ -51,7 +53,7 @@ export default function ComprasForm(
         onChange={(event) => setPrecoTotal(event.target.valueAsNumber)}
         required
       />
-      <button className={styles.botao} type="submit">
+      <button className={styles.botao} type="submit" onClick={() => getCompras}>
         Adicionar compra
       </button>
     </form>

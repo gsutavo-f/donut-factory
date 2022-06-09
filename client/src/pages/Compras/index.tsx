@@ -1,16 +1,9 @@
 import Axios from 'axios';
-import { Cliente } from '../../interfaces';
+import { Cliente, Compra } from '../../interfaces';
 import ComprasForm from './ComprasForm';
 import Modal from '../../components/Modal';
 import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
-import { useState } from 'react';
-
-interface Compra {
-  codigo: number,
-  codcliente: number,
-  precototal: number,
-  datacompra: string
-}
+import { useEffect, useState } from 'react';
 
 export default function Compras() {
   const [precoTotal, setPrecoTotal] = useState(0);
@@ -21,7 +14,11 @@ export default function Compras() {
   const [comprasList, setComprasList] = useState<Compra[]>([]);
   const [clientesList, setClientesList] = useState<Cliente[]>([]);
 
-  const getCompras = () => {
+  useEffect(() => {
+    getCompras();
+  }, [comprasList])
+
+  function getCompras() {
     Axios.get('http://localhost:3001/compra/list').then((response) => {
       setComprasList(response.data);
     });
@@ -88,6 +85,7 @@ export default function Compras() {
             codCliente={codCliente}
             setCodCliente={setCodCliente}
             clientesList={clientesList}
+            getCompras={getCompras}
           />
         </Modal>}
     </>
