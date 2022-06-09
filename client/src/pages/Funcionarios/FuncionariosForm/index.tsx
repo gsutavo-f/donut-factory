@@ -36,7 +36,7 @@ export default function FuncionariosForm(
   }
 
   return (
-    <form onSubmit={adicionarFuncionario}>
+    <form onSubmit={adicionarFuncionario} className={styles.formulario}>
       <label htmlFor="nome">
         Nome
       </label>

@@ -44,7 +44,7 @@ export default function SaboresForm(
   }
 
   return (
-    <form onSubmit={adicionarSabor}>
+    <form onSubmit={adicionarSabor} className={styles.formulario}>
       <label htmlFor="nome">
         Nome
       </label>

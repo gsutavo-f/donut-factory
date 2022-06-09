@@ -1,19 +1,19 @@
 @keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
 
-    to {
-        transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .donut {
-    animation: rotate linear infinite 15s;
+  animation: rotate linear infinite 50s;
 }
 
 .donut img {
-    width: 300px;
-    height: 300px;
-    user-select: none;
+  width: 300px;
+  height: 300px;
+  user-select: none;
 }

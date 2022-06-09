@@ -28,6 +28,13 @@
       color: white;
       text-transform: uppercase;
       user-select: none;
+      width: 320px;
+      height: 50px;
+      margin-top: 15px;
+    }
+
+    &__botao:hover {
+      cursor: pointer;
     }
   }
 

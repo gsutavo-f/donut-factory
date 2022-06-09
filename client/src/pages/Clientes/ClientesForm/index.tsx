@@ -30,7 +30,7 @@ export default function ClientesForm(
   }
 
   return (
-    <form onSubmit={adicionarCliente}>
+    <form onSubmit={adicionarCliente} className={styles.formulario}>
       <label htmlFor="nome">
         Nome
       </label>

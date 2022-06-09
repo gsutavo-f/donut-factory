@@ -24,7 +24,7 @@ export default function FiliaisForm(
   };
 
   return (
-    <form onSubmit={adicionarFilial}>
+    <form onSubmit={adicionarFilial} className={styles.formulario}>
       <label htmlFor="nome">
         Nome
       </label>

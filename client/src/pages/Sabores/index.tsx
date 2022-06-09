@@ -82,7 +82,7 @@ export default function Sabores() {
                   <h3>Name: {val.nome}</h3>
                   <h3>Preço: {val.preco}</h3>
                   <h3>Ingrediente: {val.ingrediente}</h3>
-                  <h3>Tipo: {val.tipo}</h3>
+                  <h3>Tipo: {val.tipo == 0 ? 'Doce' : 'Salgado'}</h3>
                 </div>
                 <div>
                   <input
