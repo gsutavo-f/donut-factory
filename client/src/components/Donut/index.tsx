@@ -1,13 +1,17 @@
 import React from 'react';
 import './Donut.css';
-import donutImage from './donut.png'; 
+import donutImage from './donut.png';
 
-function Donut() {
-    return (
-        <div className="donut" onDragStart={(e) => e.preventDefault()}>
-            <img src={donutImage} onDragStart={(e) => e.preventDefault()}/>
-        </div> 
-    )
+export default function Donut() {
+  return (
+    <div
+      className="donut"
+      onDragStart={(e) => e.preventDefault()}
+    >
+      <img
+        src={donutImage}
+        onDragStart={(e) => e.preventDefault()}
+      />
+    </div>
+  )
 }
-
-export default Donut;

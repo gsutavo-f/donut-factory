@@ -1,6 +1,8 @@
-import { useState } from 'react';
-import styles from './Clientes.module.scss';
 import Axios from 'axios';
+import ClientesForm from './ClientesForm';
+import Modal from '../../components/Modal';
+import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
+import { useState } from 'react';
 
 interface Cliente {
   codigo: number,
@@ -18,18 +20,9 @@ export default function Clientes() {
   const [address, setAddress] = useState('');
   const [newPhone, setNewPhone] = useState('');
 
-  const [clientList, setClientList] = useState<Cliente[]>([]);
+  const [openModal, setOpenModal] = useState(false);
 
-  const addClient = () => {
-    Axios.post('http://localhost:3001/cliente/create', {
-      name: name,
-      cpf: cpf,
-      phone: phone,
-      address: address
-    }).then(() => {
-      console.log('sucess');
-    });
-  }
+  const [clientList, setClientList] = useState<Cliente[]>([]);
 
   const getClients = () => {
     Axios.get('http://localhost:3001/cliente/list').then((response) => {
@@ -65,61 +58,66 @@ export default function Clientes() {
   }
 
   return (
-    <div className={styles.App}>
-      <div className={styles.information}>
-        <label>Name</label>
-        <input
-          type="text"
-          onChange={(event) => {
-            setName(event.target.value);
-          }} />
-        <label>Document</label>
-        <input
-          type="text"
-          onChange={(event) => {
-            setCpf(event.target.value);
-          }} />
-        <label>Phone</label>
-        <input
-          type="text"
-          onChange={(event) => {
-            setPhone(event.target.value);
-          }} />
-        <label>Address</label>
-        <input
-          type="text"
-          onChange={(event) => {
-            setAddress(event.target.value);
-          }} />
-        <button onClick={addClient}>Add Client</button>
+    <>
+      <div className={stylesTema.paginas}>
+        <div className={stylesTema.paginas__botoes}>
+          <button
+            onClick={() => setOpenModal(true)}
+            className={stylesTema.paginas__botoes__botao}
+          >
+            Adicionar novo cliente
+          </button>
+          <button
+            onClick={getClients}
+            className={stylesTema.paginas__botoes__botao}
+          >
+            Listar clientes
+          </button>
+        </div>
+        <div className={stylesTema.paginas__lista}>
+          {clientList.map((val, key) => {
+            return (
+              <div className={stylesTema.paginas__lista__pagina} key={key}>
+                <div>
+                  <h3>Name: {val.nome}</h3>
+                  <h3>Document: {val.cpf}</h3>
+                  <h3>Phone: {val.telefone}</h3>
+                  <h3>Address: {val.endereco}</h3>
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="phone"
+                    onChange={(event) => {
+                      setNewPhone(event.target.value);
+                    }}
+                  />
+                  <button onClick={() => { updatePhone(val.codigo) }}>Update Phone</button>
+                  <button onClick={() => { deleteCliente(val.codigo) }}>Delete</button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
-      <div className={styles.clients}>
-        <button onClick={getClients}>Show Clients</button>
 
-        {clientList.map((val, key) => {
-          return (
-            <div className={styles.client} key={key}>
-              <div>
-                <h3>Name: {val.nome}</h3>
-                <h3>Document: {val.cpf}</h3>
-                <h3>Phone: {val.telefone}</h3>
-                <h3>Address: {val.endereco}</h3>
-              </div>
-              <div>
-              <input
-                  type="text"
-                  placeholder="phone"
-                  onChange={(event) => {
-                    setNewPhone(event.target.value);
-                  }}
-                />
-                <button onClick={() => { updatePhone(val.codigo) }}>Update Phone</button>
-                <button onClick={() => { deleteCliente(val.codigo) }}>Delete</button>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+      {openModal
+        && <Modal
+          titulo='Adicione um cliente'
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+        >
+          <ClientesForm
+            name={name}
+            setName={setName}
+            cpf={cpf}
+            setCpf={setCpf}
+            phone={phone}
+            setPhone={setPhone}
+            address={address}
+            setAddress={setAddress}
+          />
+        </Modal>}
+    </>
   )
 }

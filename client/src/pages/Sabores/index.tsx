@@ -102,7 +102,7 @@ export default function Sabores() {
 
       {openModal
         && <Modal
-          titulo='Adicione um funcionário'
+          titulo='Adicione um sabor'
           openModal={openModal}
           setOpenModal={setOpenModal}
         >

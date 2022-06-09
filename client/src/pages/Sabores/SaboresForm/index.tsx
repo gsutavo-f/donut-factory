@@ -1,6 +1,6 @@
-import Axios from "axios";
+import Axios from 'axios';
 import Select from 'react-select';
-import styles from './SaboresForm.module.scss';
+import styles from '../../../styles/Formulario.module.scss';
 
 interface ISaboresForm {
   name: string;

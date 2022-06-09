@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import styles from './FiliaisForm.module.scss';
+import styles from '../../../styles/Formulario.module.scss';
 
 interface IFiliaisForm {
   name: string;
