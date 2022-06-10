@@ -7,8 +7,8 @@ import { useEffect, useState } from 'react';
 
 export default function Compras() {
   const [precoTotal, setPrecoTotal] = useState(0);
-  const [codCliente, setCodCliente] = useState(1);
-  const [codFilial, setCodFilial] = useState(1);
+  const [codCliente, setCodCliente] = useState(0);
+  const [codFilial, setCodFilial] = useState(0);
 
   const [openModal, setOpenModal] = useState(false);
 

@@ -43,6 +43,7 @@ export default function ComprasForm(
       <Select
         className={styles.combobox}
         name="cliente"
+        placeholder="Selecione um cliente"
         value={clientesList.find(obj => obj.value === codCliente)}
         options={clientesList}
         onChange={(event) => {
@@ -55,6 +56,7 @@ export default function ComprasForm(
       <Select
         className={styles.combobox}
         name="filial"
+        placeholder="Seleciona uma filial"
         value={filiaisList.find(obj => obj.value === codFilial)}
         options={filiaisList}
         onChange={(event) => {
