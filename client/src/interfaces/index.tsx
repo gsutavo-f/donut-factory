@@ -8,6 +8,11 @@ export interface FilialSelection {
   label: string
 }
 
+export interface SaborSelection {
+  value: number,
+  label: string
+}
+
 export interface Sabor {
   codigo: number,
   nome: string,
@@ -27,5 +32,11 @@ export interface Compra {
   codcliente: number,
   precototal: number,
   datacompra: string
+}
+
+export interface Filial {
+  codigo: number,
+  nome: string,
+  endereco: string
 }
 

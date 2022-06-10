@@ -108,6 +108,36 @@ app.delete("/filial/delete/:id", (req, res) => {
     );
 });
 
+app.get("/filial/listSabores", (req, res) => {
+    db.query(
+        "select id as value, nome as label from sabordonut",
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
+app.post("/filial/adicionaSaborFilial", (req, res) => {
+    const codFilial = req.body.codFilial;
+    const codSabor = req.body.codSabor;
+
+    db.query(
+        "insert into filial_sabordonut (codfilial, codsabor) values (?,?)",
+        [codFilial, codSabor],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("Values Inserted");
+            }
+        }
+    );
+});
+
 app.post('/sabor/create', (req, res) => {
     const name = req.body.name;
     const price = req.body.price;

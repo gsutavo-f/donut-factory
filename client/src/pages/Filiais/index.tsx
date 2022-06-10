@@ -3,18 +3,15 @@ import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
 import Axios from 'axios';
 import Modal from '../../components/Modal';
 import FiliaisForm from './FiliaisForm';
-
-interface Filial {
-  codigo: number,
-  nome: string,
-  endereco: string
-}
+import SaboresFilialForm from './SaboresFilialForm';
+import { Filial } from '../../interfaces';
 
 export default function Filiais() {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
 
-  const [openModal, setOpenModal] = useState(false);
+  const [openModalNewFilial, setOpenModalNewFilial] = useState(false);
+  const [openModalSaboresFilial, setOpenModalSaboresFilial] = useState(false);
 
   const [filialList, setFilialList] = useState<Filial[]>([]);
   const [newAddress, setNewAddress] = useState("");
@@ -49,15 +46,23 @@ export default function Filiais() {
     });
   }
 
+  Axios.get("")
+
   return (
     <>
       <div className={stylesTema.paginas}>
         <div className={stylesTema.paginas__botoes}>
           <button
-            onClick={() => setOpenModal(true)}
+            onClick={() => setOpenModalNewFilial(true)}
             className={stylesTema.paginas__botoes__botao}
           >
             Adicionar nova filial
+          </button>
+          <button
+            onClick={() => setOpenModalSaboresFilial(true)}
+            className={stylesTema.paginas__botoes__botao}
+          >
+            Adicionar Sabor
           </button>
           <button
             onClick={getFiliais}
@@ -91,11 +96,11 @@ export default function Filiais() {
         </div>
       </div>
 
-      {openModal
+      {openModalNewFilial
         && <Modal
           titulo='Adicione uma filial'
-          openModal={openModal}
-          setOpenModal={setOpenModal}
+          openModal={openModalNewFilial}
+          setOpenModal={setOpenModalNewFilial}
         >
           <FiliaisForm
             name={name}
@@ -104,6 +109,16 @@ export default function Filiais() {
             setAddress={setAddress}
           />
         </Modal>}
+
+        {openModalSaboresFilial
+          && <Modal
+            titulo='Cadastre um sabor'
+            openModal={openModalSaboresFilial}
+            setOpenModal={setOpenModalSaboresFilial}
+          >
+            <SaboresFilialForm />
+          </Modal>
+        }
     </>
   )
 }
