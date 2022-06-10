@@ -81,7 +81,7 @@ app.put("/filial/update", (req, res) => {
     const address = req.body.address;
     const id = req.body.id;
     db.query(
-        "update filial set endereco = ? where codigo = ?",
+        "update filial set endereco = ? where id = ?",
         [address, id],
         (err, result) => {
             if (err) {
@@ -96,7 +96,7 @@ app.put("/filial/update", (req, res) => {
 app.delete("/filial/delete/:id", (req, res) => {
     const id = req.params.id;
     db.query(
-        "delete from filial where codigo = ?",
+        "delete from filial where id = ?",
         id,
         (err, result) => {
             if (err) {
@@ -144,7 +144,7 @@ app.put("/sabor/update", (req, res) => {
     const id = req.body.id;
     const price = req.body.price;
     db.query(
-        "update sabordonut set preco = ? where codigo = ?",
+        "update sabordonut set preco = ? where id = ?",
         [price, id],
         (err, result) => {
             if (err) {
@@ -159,7 +159,7 @@ app.put("/sabor/update", (req, res) => {
 app.delete("/sabor/delete/:id", (req, res) => {
     const id = req.params.id;
     db.query(
-        "delete from sabordonut where codigo = ?",
+        "delete from sabordonut where id = ?",
         id,
         (err, result) => {
             if (err) {
@@ -207,7 +207,7 @@ app.put("/cliente/update", (req, res) => {
     const id = req.body.id;
     const phone = req.body.phone;
     db.query(
-        "update cliente set telefone = ? where codigo = ?",
+        "update cliente set telefone = ? where id = ?",
         [phone, id],
         (err, result) => {
             if (err) {
@@ -222,7 +222,7 @@ app.put("/cliente/update", (req, res) => {
 app.delete("/cliente/delete/:id", (req, res) => {
     const id = req.params.id;
     db.query(
-        "delete from cliente where codigo = ?",
+        "delete from cliente where id = ?",
         id,
         (err, result) => {
             if (err) {
@@ -237,6 +237,7 @@ app.delete("/cliente/delete/:id", (req, res) => {
 app.post('/compra/create', (req, res) => {
     const precototal = req.body.precoTotal;
     const codcliente = req.body.codCliente;
+    const codFilial = req.body.codFilial;
 
     db.query(
         "insert into compra (precototal, datacompra, codcliente) values (?,?,?)",
@@ -244,12 +245,23 @@ app.post('/compra/create', (req, res) => {
         (err, result) => {
             if (err) {
                 console.log(err);
+            } else {
+                let codCompra = result.insertId;
+                db.query(
+                    "insert into filial_compra (codfilial, codcompra) values (?,?)",
+                    [codFilial, codCompra],
+                    (err, result) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    }
+                );
             }
         }
     );
 
     db.query(
-        "update cliente set numcompras = numcompras + 1 where cliente.codigo = ?",
+        "update cliente set numcompras = numcompras + 1 where cliente.id = ?",
         codcliente,
         (err, result) => {
             if (err) {
@@ -277,7 +289,7 @@ app.get('/compra/list', (req, res) => {
 app.delete("/compra/delete/:id", (req, res) => {
     const id = req.params.id;
     db.query(
-        "delete from compra where codigo = ?",
+        "delete from compra where id = ?",
         id,
         (err, result) => {
             if (err) {
@@ -291,7 +303,7 @@ app.delete("/compra/delete/:id", (req, res) => {
 
 app.get("/compra/listClientes", (req, res) => {
     db.query(
-        "select codigo as value, nome as label from cliente",
+        "select id as value, nome as label from cliente",
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -300,7 +312,20 @@ app.get("/compra/listClientes", (req, res) => {
             }
         }
     )
-})
+});
+
+app.get("/compra/listFiliais", (req, res) => {
+    db.query(
+        "select id as value, nome as label from filial",
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    )
+});
 
 app.listen(process.env.PORT || PORT, () => {
     console.log(`Server running on port ${PORT}`);

@@ -1,4 +1,9 @@
-export interface Cliente {
+export interface ClienteSelection {
+  value: number,
+  label: string
+}
+
+export interface FilialSelection {
   value: number,
   label: string
 }

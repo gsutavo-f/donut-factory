@@ -1,21 +1,26 @@
 import Axios from 'axios';
 import Select from 'react-select';
 import styles from '../../../styles/Formulario.module.scss';
-import { Cliente, Compra } from '../../../interfaces';
+import { ClienteSelection, FilialSelection, Compra } from '../../../interfaces';
 
 interface IComprasForm {
   precoTotal: number;
   setPrecoTotal: React.Dispatch<React.SetStateAction<number>>;
   codCliente: number;
   setCodCliente: React.Dispatch<React.SetStateAction<number>>;
-  clientesList: Cliente[];
+  clientesList: ClienteSelection[];
+  codFilial: number;
+  setCodFilial: React.Dispatch<React.SetStateAction<number>>;
+  filiaisList: FilialSelection[];
   getCompras: React.Dispatch<React.SetStateAction<Compra[]>>;
 }
 
 export default function ComprasForm(
   { precoTotal, setPrecoTotal,
     codCliente, setCodCliente,
-    clientesList, getCompras }: IComprasForm) {
+    codFilial, setCodFilial,
+    clientesList, filiaisList,
+    getCompras }: IComprasForm) {
 
   function adicionarCompra(evento: React.FormEvent<HTMLFormElement>) {
     evento.preventDefault();
@@ -23,6 +28,7 @@ export default function ComprasForm(
     Axios.post('http://localhost:3001/compra/create', {
       precoTotal: precoTotal,
       codCliente: codCliente,
+      codFilial: codFilial
     }).then(() => {
       console.log("sucess");
     });
@@ -41,6 +47,18 @@ export default function ComprasForm(
         options={clientesList}
         onChange={(event) => {
           setCodCliente(event!.value);
+        }}
+      />
+      <label htmlFor="filial">
+        Filial
+      </label>
+      <Select
+        className={styles.combobox}
+        name="filial"
+        value={filiaisList.find(obj => obj.value === codFilial)}
+        options={filiaisList}
+        onChange={(event) => {
+          setCodFilial(event!.value);
         }}
       />
       <label htmlFor="precoTotal">

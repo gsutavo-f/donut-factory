@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { Cliente, Compra } from '../../interfaces';
+import { ClienteSelection, FilialSelection, Compra } from '../../interfaces';
 import ComprasForm from './ComprasForm';
 import Modal from '../../components/Modal';
 import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
@@ -8,11 +8,13 @@ import { useEffect, useState } from 'react';
 export default function Compras() {
   const [precoTotal, setPrecoTotal] = useState(0);
   const [codCliente, setCodCliente] = useState(1);
+  const [codFilial, setCodFilial] = useState(1);
 
   const [openModal, setOpenModal] = useState(false);
 
   const [comprasList, setComprasList] = useState<Compra[]>([]);
-  const [clientesList, setClientesList] = useState<Cliente[]>([]);
+  const [clientesList, setClientesList] = useState<ClienteSelection[]>([]);
+  const [filiaisList, setFiliaisList] = useState<FilialSelection[]>([]);
 
   useEffect(() => {
     getCompras();
@@ -35,6 +37,10 @@ export default function Compras() {
 
   Axios.get('http://localhost:3001/compra/listClientes').then((response) => {
     setClientesList(response.data);
+  });
+
+  Axios.get('http://localhost:3001/compra/listFiliais').then((response) => {
+    setFiliaisList(response.data);
   });
 
 
@@ -85,6 +91,9 @@ export default function Compras() {
             codCliente={codCliente}
             setCodCliente={setCodCliente}
             clientesList={clientesList}
+            codFilial={codFilial}
+            setCodFilial={setCodFilial}
+            filiaisList={filiaisList}
             getCompras={getCompras}
           />
         </Modal>}
