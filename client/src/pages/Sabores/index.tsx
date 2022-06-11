@@ -5,7 +5,7 @@ import Modal from '../../components/Modal';
 import SaboresForm from './SaboresForm';
 import Lista from '../../components/Lista';
 import UpdateForm from '../../components/UpdateForm';
-import { StringNumber } from '../../interfaces';
+import { StringNumber } from '../../types';
 
 
 interface Sabor {
@@ -84,20 +84,15 @@ export default function Sabores() {
         </div>
         <div className={stylesTema.paginas__lista}>
 
-          {saborList.length > 0 ? (
-            <Lista
-              colunas={colunas}
-              lista={saborList}
-              setLista={setSaborList}
-              setOpenUpdateModal={setOpenUpdateModal}
-              pagina='sabor'
-              setId={setId}
-            />
-          ) : (
-            <div className={stylesTema.paginas__lista__vazia}>
-              Adicione um sabor
-            </div>
-          )}
+          <Lista
+            colunas={colunas}
+            lista={saborList}
+            setLista={setSaborList}
+            setOpenUpdateModal={setOpenUpdateModal}
+            pagina='sabor'
+            setId={setId}
+          />
+
 
         </div>
       </div>

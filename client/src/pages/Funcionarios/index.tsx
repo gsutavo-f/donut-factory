@@ -3,6 +3,7 @@ import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
 import Axios from 'axios';
 import Modal from '../../components/Modal';
 import FuncionariosForm from './FuncionariosForm';
+import { FilialSelection } from '../../types';
 
 interface Funcionario {
   nome: string,
@@ -17,10 +18,11 @@ export default function Funcionarios() {
   const [cpf, setCpf] = useState("");
   const [position, setPosition] = useState("");
   const [salary, setSalary] = useState(0);
-  const [filial, setFilial] = useState(0);
+  const [codFilial, setCodFilial] = useState(0);
 
   const [openModal, setOpenModal] = useState(false);
 
+  const [filiaisList, setFiliaisList] = useState<FilialSelection[]>([]);
   const [employeeList, setEmployeeList] = useState<Funcionario[]>([]);
 
   const getEmployees = () => {
@@ -28,6 +30,10 @@ export default function Funcionarios() {
       setEmployeeList(response.data);
     });
   };
+
+  Axios.get('http://localhost:3001/compra/listFiliais').then((response) => {
+    setFiliaisList(response.data);
+  });
 
   return (
     <>
@@ -76,8 +82,9 @@ export default function Funcionarios() {
             setPosition={setPosition}
             salary={salary}
             setSalary={setSalary}
-            filial={filial}
-            setFilial={setFilial}
+            codFilial={codFilial}
+            setCodFilial={setCodFilial}
+            filiaisList={filiaisList}
           />
         </Modal>}
     </>

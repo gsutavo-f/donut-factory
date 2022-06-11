@@ -1,4 +1,6 @@
 import Axios from 'axios';
+import Select from 'react-select';
+import { FilialSelection } from '../../../types';
 import styles from '../../../styles/Formulario.module.scss';
 
 interface IFuncionariosForm {
@@ -10,8 +12,9 @@ interface IFuncionariosForm {
   setPosition: React.Dispatch<React.SetStateAction<string>>;
   salary: number;
   setSalary: React.Dispatch<React.SetStateAction<number>>;
-  filial: number;
-  setFilial: React.Dispatch<React.SetStateAction<number>>;
+  codFilial: number;
+  setCodFilial: React.Dispatch<React.SetStateAction<number>>;
+  filiaisList: FilialSelection[];
 }
 
 export default function FuncionariosForm(
@@ -19,7 +22,8 @@ export default function FuncionariosForm(
     cpf, setCpf,
     position, setPosition,
     salary, setSalary,
-    filial, setFilial }: IFuncionariosForm) {
+    codFilial, setCodFilial,
+    filiaisList }: IFuncionariosForm) {
 
   function adicionarFuncionario(evento: React.FormEvent<HTMLFormElement>) {
     evento.preventDefault();
@@ -29,7 +33,7 @@ export default function FuncionariosForm(
       cpf: cpf,
       position: position,
       salary: salary,
-      filial: filial
+      codFilial: codFilial
     }).then(() => {
       console.log("sucess");
     });
@@ -80,12 +84,15 @@ export default function FuncionariosForm(
       <label htmlFor="filial">
         Filial
       </label>
-      <input
-        type="number"
+      <Select
+        className={styles.combobox}
         name="filial"
-        value={filial}
-        onChange={(event) => setFilial(event.target.valueAsNumber)}
-        required
+        placeholder="Selecione uma filial"
+        value={filiaisList.find(obj => obj.value === codFilial)}
+        options={filiaisList}
+        onChange={(event) => {
+          setCodFilial(event!.value);
+        }}
       />
       <button className={styles.botao} type="submit">
         Adicionar funcionário

@@ -4,7 +4,7 @@ import Axios from 'axios';
 import Modal from '../../components/Modal';
 import FiliaisForm from './FiliaisForm';
 import SaboresFilialForm from './SaboresFilialForm';
-import { Filial, StringNumber } from '../../interfaces';
+import { Filial, StringNumber } from '../../types';
 import UpdateForm from '../../components/UpdateForm';
 import Lista from '../../components/Lista';
 

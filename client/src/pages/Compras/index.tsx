@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { ClienteSelection, FilialSelection, Compra } from '../../interfaces';
+import { ClienteSelection, FilialSelection, Compra } from '../../types';
 import ComprasForm from './ComprasForm';
 import Modal from '../../components/Modal';
 import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
