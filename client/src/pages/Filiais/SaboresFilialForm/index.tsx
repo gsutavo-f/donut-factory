@@ -2,7 +2,7 @@ import Axios from 'axios';
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import styles from '../../../styles/Formulario.module.scss';
-import { SaborSelection, FilialSelection } from '../../../interfaces';
+import { SaborSelection, FilialSelection } from '../../../types';
 
 export default function SaboresFilialForm() {
     const [codFilial, setCodFilial] = useState(0);
