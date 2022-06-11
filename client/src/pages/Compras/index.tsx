@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { ClienteSelection, FilialSelection, Compra } from '../../interfaces';
+import { ClienteSelection, FilialSelection, SaborSelection, Compra } from '../../interfaces';
 import ComprasForm from './ComprasForm';
 import Modal from '../../components/Modal';
 import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
@@ -9,12 +9,14 @@ export default function Compras() {
   const [precoTotal, setPrecoTotal] = useState(0);
   const [codCliente, setCodCliente] = useState(0);
   const [codFilial, setCodFilial] = useState(0);
+  const [codSabor, setCodSabor] = useState(0);
 
   const [openModal, setOpenModal] = useState(false);
 
   const [comprasList, setComprasList] = useState<Compra[]>([]);
   const [clientesList, setClientesList] = useState<ClienteSelection[]>([]);
   const [filiaisList, setFiliaisList] = useState<FilialSelection[]>([]);
+  const [saboresList, setSaboresList] = useState<SaborSelection[]>([]);
 
   useEffect(() => {
     getCompras();
@@ -33,7 +35,6 @@ export default function Compras() {
       }))
     });
   }
-
 
   Axios.get('http://localhost:3001/compra/listClientes').then((response) => {
     setClientesList(response.data);
@@ -93,7 +94,11 @@ export default function Compras() {
             clientesList={clientesList}
             codFilial={codFilial}
             setCodFilial={setCodFilial}
+            codSabor={codSabor}
+            setCodSabor={setCodSabor}
             filiaisList={filiaisList}
+            saboresList={saboresList}
+            setSaboresList={setSaboresList}
             getCompras={getCompras}
           />
         </Modal>}
