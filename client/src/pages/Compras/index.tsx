@@ -30,8 +30,8 @@ export default function Compras() {
 
   const deleteCompra = (id: number) => {
     Axios.delete(`http://localhost:3001/compra/delete/${id}`).then((response) => {
-      setComprasList(comprasList.filter((val) => {
-        return val.codigo != id
+      setComprasList(comprasList.filter((val: Compra) => {
+        return val.id != id
       }))
     });
   }
@@ -72,7 +72,7 @@ export default function Compras() {
                   <h3>Data: {val.datacompra}</h3>
                 </div>
                 <div>
-                  <button onClick={() => { deleteCompra(val.codigo) }}>Delete</button>
+                  <button onClick={() => { deleteCompra(val.id) }}>Delete</button>
                 </div>
               </div>
             );
