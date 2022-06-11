@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { ClienteSelection, FilialSelection, Compra } from '../../types';
+import { ClienteSelection, FilialSelection, SaborSelection, Compra } from '../../types';
 import ComprasForm from './ComprasForm';
 import Modal from '../../components/Modal';
 import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
@@ -9,12 +9,14 @@ export default function Compras() {
   const [precoTotal, setPrecoTotal] = useState(0);
   const [codCliente, setCodCliente] = useState(0);
   const [codFilial, setCodFilial] = useState(0);
+  const [codSabor, setCodSabor] = useState(0);
 
   const [openModal, setOpenModal] = useState(false);
 
   const [comprasList, setComprasList] = useState<Compra[]>([]);
   const [clientesList, setClientesList] = useState<ClienteSelection[]>([]);
   const [filiaisList, setFiliaisList] = useState<FilialSelection[]>([]);
+  const [saboresList, setSaboresList] = useState<SaborSelection[]>([]);
 
   useEffect(() => {
     getCompras();
@@ -28,12 +30,11 @@ export default function Compras() {
 
   const deleteCompra = (id: number) => {
     Axios.delete(`http://localhost:3001/compra/delete/${id}`).then((response) => {
-      setComprasList(comprasList.filter((val) => {
-        return val.codigo != id
+      setComprasList(comprasList.filter((val: Compra) => {
+        return val.id != id
       }))
     });
   }
-
 
   Axios.get('http://localhost:3001/compra/listClientes').then((response) => {
     setClientesList(response.data);
@@ -71,7 +72,7 @@ export default function Compras() {
                   <h3>Data: {val.datacompra}</h3>
                 </div>
                 <div>
-                  <button onClick={() => { deleteCompra(val.codigo) }}>Delete</button>
+                  <button onClick={() => { deleteCompra(val.id) }}>Delete</button>
                 </div>
               </div>
             );
@@ -93,7 +94,11 @@ export default function Compras() {
             clientesList={clientesList}
             codFilial={codFilial}
             setCodFilial={setCodFilial}
+            codSabor={codSabor}
+            setCodSabor={setCodSabor}
             filiaisList={filiaisList}
+            saboresList={saboresList}
+            setSaboresList={setSaboresList}
             getCompras={getCompras}
           />
         </Modal>}

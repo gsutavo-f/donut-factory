@@ -5,7 +5,7 @@ import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
 import { useState } from 'react';
 
 interface Cliente {
-  codigo: number,
+  id: number,
   nome: string,
   cpf: string,
   telefone: string,
@@ -33,10 +33,10 @@ export default function Clientes() {
   const updatePhone = (id: number) => {
     Axios.put('http://localhost:3001/sabor/update', { phone: newPhone, id: id }).then(
       (response) => {
-        setClientList(clientList.map((val) => {
-          return val.codigo == id
+        setClientList(clientList.map((val: Cliente) => {
+          return val.id == id
             ? {
-              codigo: val.codigo,
+              id: val.id,
               cpf: val.cpf,
               nome: val.nome,
               telefone: newPhone,
@@ -51,8 +51,8 @@ export default function Clientes() {
 
   const deleteCliente = (id: number) => {
     Axios.delete(`http://localhost:3001/cliente/delete/${id}`).then((response) => {
-      setClientList(clientList.filter((val) => {
-        return val.codigo != id
+      setClientList(clientList.filter((val: Cliente) => {
+        return val.id != id
       }))
     });
   }
@@ -92,8 +92,8 @@ export default function Clientes() {
                       setNewPhone(event.target.value);
                     }}
                   />
-                  <button onClick={() => { updatePhone(val.codigo) }}>Update Phone</button>
-                  <button onClick={() => { deleteCliente(val.codigo) }}>Delete</button>
+                  <button onClick={() => { updatePhone(val.id) }}>Update Phone</button>
+                  <button onClick={() => { deleteCliente(val.id) }}>Delete</button>
                 </div>
               </div>
             );

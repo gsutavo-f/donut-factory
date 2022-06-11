@@ -28,7 +28,7 @@ export interface Colunas {
 }
 
 export interface Compra {
-  codigo: number,
+  id: number,
   codcliente: number,
   precototal: number,
   datacompra: string

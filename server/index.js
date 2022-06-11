@@ -268,6 +268,7 @@ app.post('/compra/create', (req, res) => {
     const precototal = req.body.precoTotal;
     const codcliente = req.body.codCliente;
     const codFilial = req.body.codFilial;
+    const codSabor = req.body.codSabor;
 
     db.query(
         "insert into compra (precototal, datacompra, codcliente) values (?,?,?)",
@@ -356,6 +357,21 @@ app.get("/compra/listFiliais", (req, res) => {
         }
     )
 });
+
+app.get("/compra/listSaboresByFilial/:idFilial", (req, res) => {
+    const idFilial = req.params.idFilial;
+    db.query(
+        "select fs.codsabor as value, s.nome as label from filial_sabordonut fs inner join sabordonut s on s.id = fs.codsabor where fs.codfilial = ?",
+        idFilial,
+        (err, result) => {
+            if(err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    )
+})
 
 app.listen(process.env.PORT || PORT, () => {
     console.log(`Server running on port ${PORT}`);

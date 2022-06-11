@@ -1,7 +1,8 @@
 import Axios from 'axios';
 import Select from 'react-select';
+import { useEffect } from 'react';
 import styles from '../../../styles/Formulario.module.scss';
-import { ClienteSelection, FilialSelection, Compra } from '../../../types';
+import { ClienteSelection, FilialSelection, SaborSelection, Compra } from '../../../types';
 
 interface IComprasForm {
   precoTotal: number;
@@ -13,13 +14,19 @@ interface IComprasForm {
   setCodFilial: React.Dispatch<React.SetStateAction<number>>;
   filiaisList: FilialSelection[];
   getCompras: React.Dispatch<React.SetStateAction<Compra[]>>;
+  saboresList: SaborSelection[];
+  codSabor: number;
+  setCodSabor: React.Dispatch<React.SetStateAction<number>>;
+  setSaboresList: React.Dispatch<React.SetStateAction<SaborSelection[]>>;
 }
 
 export default function ComprasForm(
   { precoTotal, setPrecoTotal,
     codCliente, setCodCliente,
     codFilial, setCodFilial,
+    codSabor, setCodSabor,
     clientesList, filiaisList,
+    saboresList, setSaboresList,
     getCompras }: IComprasForm) {
 
   function adicionarCompra(evento: React.FormEvent<HTMLFormElement>) {
@@ -28,12 +35,19 @@ export default function ComprasForm(
     Axios.post('http://localhost:3001/compra/create', {
       precoTotal: precoTotal,
       codCliente: codCliente,
-      codFilial: codFilial
+      codFilial: codFilial,
+      codSabor: codSabor
     }).then(() => {
       console.log("sucess");
     });
     getCompras;
   }
+
+  useEffect(() => {
+    Axios.get(`http://localhost:3001/compra/listSaboresByFilial/${codFilial}`).then((response) => {
+      setSaboresList(response.data);
+    })
+  }, [codFilial]);
 
   return (
     <form onSubmit={adicionarCompra} className={styles.formulario}>
@@ -56,11 +70,24 @@ export default function ComprasForm(
       <Select
         className={styles.combobox}
         name="filial"
-        placeholder="Seleciona uma filial"
+        placeholder="Selecione uma filial"
         value={filiaisList.find(obj => obj.value === codFilial)}
         options={filiaisList}
         onChange={(event) => {
           setCodFilial(event!.value);
+        }}
+      />
+      <label htmlFor="sabor">
+        Sabor
+      </label>
+      <Select
+        className={styles.combobox}
+        name="sabor"
+        placeholder="Selecione um sabor"
+        value={saboresList.find(obj => obj.value === codSabor)}
+        options={saboresList}
+        onChange={(event) => {
+          setCodSabor(event!.value);
         }}
       />
       <label htmlFor="precoTotal">

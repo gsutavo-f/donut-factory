@@ -33,7 +33,7 @@ export default function Filiais() {
   const updateAddress = (codigo: number) => {
     Axios.put('http://localhost:3001/filial/update', { address: newAddress, id: id }).then(
       (response) => {
-        setFilialList(filialList.map((val) => {
+        setFilialList(filialList.map((val: Filial) => {
           return val.id == codigo
             ? {
               id: val.id,
