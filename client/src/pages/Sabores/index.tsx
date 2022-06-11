@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
 import Modal from '../../components/Modal';
@@ -59,7 +59,10 @@ export default function Sabores() {
         return val.codigo != id
       }))
     });
+    getSabores;
   }
+
+  useEffect(getSabores, [saborList]);
 
   return (
     <>

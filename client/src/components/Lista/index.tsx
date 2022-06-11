@@ -36,11 +36,11 @@ export default function Lista({ colunas, lista, apagar, pagina, update }: Props)
             <div className={styles.tabela__body__linha__icones}>
               {`${update}` != undefined &&
                 <td>
-                  <img src={editIcon} onClick={() => update!(item.codigo)}></img>
+                  <img src={editIcon} onClick={() => update!(item.id)}></img>
                 </td>
               }
               <td>
-                <img src={deleteIcon} onClick={() => apagar(item.codigo)}></img>
+                <img src={deleteIcon} onClick={() => apagar(item.id)}></img>
               </td>
             </div>
           </tr>
