@@ -4,7 +4,6 @@ import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
 import Modal from '../../components/Modal';
 import SaboresForm from './SaboresForm';
 import Lista from '../../components/Lista';
-import { Colunas } from '../../interfaces';
 
 interface Sabor {
   codigo: number,
@@ -53,15 +52,6 @@ export default function Sabores() {
     )
   }
 
-  const deleteSabor = (id: number) => {
-    Axios.delete(`http://localhost:3001/sabor/delete/${id}`).then((response) => {
-      setSaborList(saborList.filter((val) => {
-        return val.codigo != id
-      }))
-    });
-    getSabores;
-  }
-
   useEffect(getSabores, [saborList]);
 
   return (
@@ -74,47 +64,24 @@ export default function Sabores() {
           >
             Adicionar novo sabor
           </button>
-          <button
-            onClick={getSabores}
-            className={stylesTema.paginas__botoes__botao}
-          >
-            Listar sabores
-          </button>
+
         </div>
         <div className={stylesTema.paginas__lista}>
 
+          {saborList.length > 0 ? (
           <Lista
             colunas={colunas}
             lista={saborList}
-            apagar={deleteSabor}
+            setLista={setSaborList}
             update={updatePrice}
-            pagina='sabores'
+            pagina='sabor'
           />
+          ) : (
+          <div className={stylesTema.paginas__lista__vazia}>
+            adicione um sabor
+          </div>
+          )}
 
-
-
-          {/* {saborList.map((val, key) => {
-            return (
-              <div className={stylesTema.paginas__lista__pagina} key={key}>
-                <div>
-                  <h3>Name: {val.nome}</h3>
-                  <h3>Preço: {val.preco}</h3>
-                  <h3>Ingrediente: {val.ingrediente}</h3>
-                  <h3>Tipo: {val.tipo == 0 ? 'Doce' : 'Salgado'}</h3>
-                </div>
-                <div>
-                  <input
-                    type="number"
-                    onChange={(event) => {
-                      setNewPrice(event.target.valueAsNumber);
-                    }}
-                  />
-                  <button onClick={() => { updatePrice(val.codigo) }}>Update Price</button>
-                  <button onClick={() => { deleteSabor(val.codigo) }}>Delete</button>
-                </div>
-              </div>
-            );
-          })} */}
         </div>
       </div>
 

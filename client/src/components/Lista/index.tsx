@@ -1,16 +1,25 @@
 import styles from './Lista.module.scss';
 import deleteIcon from './delete.png';
 import editIcon from './edit.png';
+import Axios from 'axios';
 
-interface Props {
-  pagina?: string;
+interface Props<T> {
+  pagina: string;
   colunas: string[];
   lista: Array<any>;
-  apagar: (id: number) => void;
+  setLista: (value: React.SetStateAction<T[]>) => void
   update?: (id: number) => void;
 }
 
-export default function Lista({ colunas, lista, apagar, pagina, update }: Props) {
+export default function Lista<T>({ colunas, lista, pagina, update, setLista }: Props<T>) {
+
+  function deletaItem(codigo: number, pagina: string) {
+    Axios.delete(`http://localhost:3001/${pagina}/delete/${codigo}`).then((response) => {
+      setLista(lista.filter((val) => {
+        return val.id != codigo
+      }))
+    });
+  }
 
   return (
     <table className={styles.tabela}>
@@ -27,22 +36,20 @@ export default function Lista({ colunas, lista, apagar, pagina, update }: Props)
             {colunas.map((coluna, key) => (
               <td key={key} className={styles.tabela__body__linha__info}>
                 {coluna == 'tipo'
-                  && `${pagina}` == 'sabores' ?
+                  && `${pagina}` == 'sabor' ?
                   item[`${coluna}`] == 0 ? 'doce' : 'salgado'
                   : item[`${coluna}`]
                 }
               </td>
             ))}
-            <div className={styles.tabela__body__linha__icones}>
               {`${update}` != undefined &&
-                <td>
+                <td className={styles.tabela__body__linha__icone}>
                   <img src={editIcon} onClick={() => update!(item.id)}></img>
                 </td>
               }
-              <td>
-                <img src={deleteIcon} onClick={() => apagar(item.id)}></img>
+              <td className={styles.tabela__body__linha__icone}>
+                <img src={deleteIcon} onClick={() => deletaItem(item.id, pagina)}></img>
               </td>
-            </div>
           </tr>
         ))}
       </tbody>

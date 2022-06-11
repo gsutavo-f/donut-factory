@@ -9,10 +9,10 @@
     &__linha {
       font-weight: 500;
       text-align: center;
-      color: bisque;
+      color: white;
       font-size: larger;
       padding: 10px 30px;
-      border-bottom: 2px solid white;
+      border-bottom: 2px solid bisque;
     }
   }
 
@@ -25,13 +25,8 @@
         color: #363434
       }
 
-      &__icones {
-
-
-        td {
-          padding: 15px 2.5px 0 2.5px;
-
-        }
+      &__icone {
+        padding: 15px 2.5px 0 2.5px;
 
         img:hover {
           cursor: pointer;

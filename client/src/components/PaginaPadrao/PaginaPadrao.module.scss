@@ -11,6 +11,7 @@
   flex-direction: row;
   height: 92vh;
   justify-content: space-around;
+  text-transform: uppercase;
 
   &__botoes {
     margin: 90px 30px;
@@ -26,8 +27,8 @@
       border: none;
       border-radius: 50px;
       letter-spacing: 2.5px;
-      color: white;
       text-transform: uppercase;
+      color: white;
       user-select: none;
       width: 320px;
       height: 50px;
@@ -65,7 +66,11 @@
       display: flex;
       padding: 10px;
       background-color: #FCE4D8;
-      text-transform: uppercase;
+    }
+
+    &__vazia {
+      font-size: xx-large;
+      color: white;
     }
   }
 }
