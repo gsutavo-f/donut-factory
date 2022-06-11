@@ -127,8 +127,7 @@ export default function Sabores() {
             id={id}
             setOpenUpdateModal={setOpenUpdateModal}
           />
-        </Modal>
-      }
+        </Modal>}
     </>
   );
 }

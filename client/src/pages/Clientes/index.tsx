@@ -2,7 +2,10 @@ import Axios from 'axios';
 import ClientesForm from './ClientesForm';
 import Modal from '../../components/Modal';
 import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { StringNumber } from '../../types';
+import Lista from '../../components/Lista';
+import UpdateForm from '../../components/UpdateForm';
 
 interface Cliente {
   id: number,
@@ -18,11 +21,17 @@ export default function Clientes() {
   const [cpf, setCpf] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
-  const [newPhone, setNewPhone] = useState('');
+
+  const [id, setId] = useState(0);
+
+  const [newPhone, setNewPhone] = useState<StringNumber>('');
 
   const [openModal, setOpenModal] = useState(false);
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
 
   const [clientList, setClientList] = useState<Cliente[]>([]);
+
+  const colunas: string[] = ['nome', 'cpf', 'telefone', 'endereco'];
 
   const getClients = () => {
     Axios.get('http://localhost:3001/cliente/list').then((response) => {
@@ -30,16 +39,16 @@ export default function Clientes() {
     });
   }
 
-  const updatePhone = (id: number) => {
+  const updatePhone = (codigo: number) => {
     Axios.put('http://localhost:3001/sabor/update', { phone: newPhone, id: id }).then(
       (response) => {
         setClientList(clientList.map((val: Cliente) => {
-          return val.id == id
+          return val.id == codigo
             ? {
               id: val.id,
               cpf: val.cpf,
               nome: val.nome,
-              telefone: newPhone,
+              telefone: newPhone as string,
               endereco: val.endereco,
               numcompras: val.numcompras
             }
@@ -49,13 +58,7 @@ export default function Clientes() {
     )
   }
 
-  const deleteCliente = (id: number) => {
-    Axios.delete(`http://localhost:3001/cliente/delete/${id}`).then((response) => {
-      setClientList(clientList.filter((val: Cliente) => {
-        return val.id != id
-      }))
-    });
-  }
+  useEffect(getClients, [clientList]);
 
   return (
     <>
@@ -75,33 +78,19 @@ export default function Clientes() {
           </button>
         </div>
         <div className={stylesTema.paginas__lista}>
-          {clientList.map((val, key) => {
-            return (
-              <div className={stylesTema.paginas__lista__pagina} key={key}>
-                <div>
-                  <h3>Name: {val.nome}</h3>
-                  <h3>Document: {val.cpf}</h3>
-                  <h3>Phone: {val.telefone}</h3>
-                  <h3>Address: {val.endereco}</h3>
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    placeholder="phone"
-                    onChange={(event) => {
-                      setNewPhone(event.target.value);
-                    }}
-                  />
-                  <button onClick={() => { updatePhone(val.id) }}>Update Phone</button>
-                  <button onClick={() => { deleteCliente(val.id) }}>Delete</button>
-                </div>
-              </div>
-            );
-          })}
+          <Lista
+            colunas={colunas}
+            lista={clientList}
+            setLista={setClientList}
+            setOpenUpdateModal={setOpenUpdateModal}
+            pagina='cliente'
+            setId={setId}
+          />
         </div>
       </div>
 
-      {openModal
+      {
+        openModal
         && <Modal
           titulo='Adicione um cliente'
           openModal={openModal}
@@ -116,6 +105,23 @@ export default function Clientes() {
             setPhone={setPhone}
             address={address}
             setAddress={setAddress}
+          />
+        </Modal>}
+
+      {openUpdateModal
+        && <Modal
+          titulo='Atualize o telefone'
+          openModal={openUpdateModal}
+          setOpenModal={setOpenUpdateModal}
+        >
+          <UpdateForm
+            label='Novo telefone'
+            type='text'
+            setNewValue={setNewPhone}
+            newValue={newPhone}
+            submit={updatePhone}
+            id={id}
+            setOpenUpdateModal={setOpenUpdateModal}
           />
         </Modal>}
     </>
