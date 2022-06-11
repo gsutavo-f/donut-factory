@@ -39,23 +39,21 @@ export default function Lista<T>({ colunas, lista, pagina, setOpenUpdateModal, s
       <tbody className={styles.tabela__body}>
         {lista.map((item, index) => (
           <tr key={index} className={styles.tabela__body__linha}>
+
             {colunas.map((coluna, key) => (
               <td key={key} className={styles.tabela__body__linha__info}>
-                {coluna == 'tipo'
-                  && `${pagina}` == 'sabor' ?
-                  item[`${coluna}`] == 0 ? 'doce' : 'salgado'
-                  : item[`${coluna}`]
+                {item[`${coluna}`]
                 }
               </td>
             ))}
-              {setOpenUpdateModal &&
-                <td className={styles.tabela__body__linha__icone}>
-                  <img src={editIcon} onClick={() => atualizaItem(item.id)}></img>
-                </td>
-              }
+            {setOpenUpdateModal &&
               <td className={styles.tabela__body__linha__icone}>
-                <img src={deleteIcon} onClick={() => deletaItem(item.id, pagina)}></img>
+                <img src={editIcon} onClick={() => atualizaItem(item.id)}></img>
               </td>
+            }
+            <td className={styles.tabela__body__linha__icone}>
+              <img src={deleteIcon} onClick={() => deletaItem(item.id, pagina)}></img>
+            </td>
           </tr>
         ))}
       </tbody>

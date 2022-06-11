@@ -1,20 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
 import Axios from 'axios';
 import Modal from '../../components/Modal';
 import FiliaisForm from './FiliaisForm';
 import SaboresFilialForm from './SaboresFilialForm';
-import { Filial } from '../../interfaces';
+import { Filial, StringNumber } from '../../interfaces';
+import UpdateForm from '../../components/UpdateForm';
+import Lista from '../../components/Lista';
 
 export default function Filiais() {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
 
+  const [id, setId] = useState(0);
+
+  const [newAddress, setNewAddress] = useState<StringNumber>("");
+
   const [openModalNewFilial, setOpenModalNewFilial] = useState(false);
   const [openModalSaboresFilial, setOpenModalSaboresFilial] = useState(false);
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
 
   const [filialList, setFilialList] = useState<Filial[]>([]);
-  const [newAddress, setNewAddress] = useState("");
+
+  const colunas: string[] = ['nome', 'endereco'];
 
   const getFiliais = () => {
     Axios.get('http://localhost:3001/filial/list').then((response) => {
@@ -22,15 +30,15 @@ export default function Filiais() {
     });
   }
 
-  const updateAddress = (id: number) => {
+  const updateAddress = (codigo: number) => {
     Axios.put('http://localhost:3001/filial/update', { address: newAddress, id: id }).then(
       (response) => {
         setFilialList(filialList.map((val) => {
-          return val.codigo == id
+          return val.id == codigo
             ? {
-              codigo: val.codigo,
+              id: val.id,
               nome: val.nome,
-              endereco: newAddress
+              endereco: newAddress as string
             }
             : val
         }))
@@ -38,15 +46,7 @@ export default function Filiais() {
     );
   }
 
-  const deleteFilial = (id: number) => {
-    Axios.delete(`http://localhost:3001/filial/delete/${id}`).then((response) => {
-      setFilialList(filialList.filter((val) => {
-        return val.codigo != id
-      }))
-    });
-  }
-
-  Axios.get("")
+  useEffect(getFiliais, [filialList]);
 
   return (
     <>
@@ -64,35 +64,22 @@ export default function Filiais() {
           >
             Adicionar Sabor
           </button>
-          <button
-            onClick={getFiliais}
-            className={stylesTema.paginas__botoes__botao}
-          >
-            Listar filiais
-          </button>
         </div>
         <div className={stylesTema.paginas__lista}>
-          {filialList.map((val, key) => {
-            return (
-              <div className={stylesTema.paginas__lista__pagina} key={key}>
-                <div>
-                  <h3>Name: {val.nome}</h3>
-                  <h3>Filial: {val.endereco}</h3>
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    placeholder="address"
-                    onChange={(event) => {
-                      setNewAddress(event.target.value);
-                    }}
-                  />
-                  <button onClick={() => { updateAddress(val.codigo) }}>Update Address</button>
-                  <button onClick={() => { deleteFilial(val.codigo) }}>Delete</button>
-                </div>
-              </div>
-            );
-          })}
+          {filialList.length > 0 ? (
+            <Lista
+              colunas={colunas}
+              lista={filialList}
+              setLista={setFilialList}
+              setOpenUpdateModal={setOpenUpdateModal}
+              pagina='filial'
+              setId={setId}
+            />
+          ) : (
+            <div className={stylesTema.paginas__lista__vazia}>
+              Adicione uma filial
+            </div>
+          )}
         </div>
       </div>
 
@@ -110,15 +97,33 @@ export default function Filiais() {
           />
         </Modal>}
 
-        {openModalSaboresFilial
-          && <Modal
-            titulo='Cadastre um sabor'
-            openModal={openModalSaboresFilial}
-            setOpenModal={setOpenModalSaboresFilial}
-          >
-            <SaboresFilialForm />
-          </Modal>
-        }
+      {openModalSaboresFilial
+        && <Modal
+          titulo='Adicione um sabor'
+          openModal={openModalSaboresFilial}
+          setOpenModal={setOpenModalSaboresFilial}
+        >
+          <SaboresFilialForm />
+        </Modal>
+      }
+
+      {openUpdateModal
+        && <Modal
+          titulo='Atualize o endereço'
+          openModal={openUpdateModal}
+          setOpenModal={setOpenUpdateModal}
+        >
+          <UpdateForm
+            label='Novo endereço'
+            type='text'
+            setNewValue={setNewAddress}
+            newValue={newAddress}
+            submit={updateAddress}
+            id={id}
+            setOpenUpdateModal={setOpenUpdateModal}
+          />
+        </Modal>
+      }
     </>
   )
 }

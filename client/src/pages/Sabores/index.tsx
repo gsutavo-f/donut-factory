@@ -36,7 +36,16 @@ export default function Sabores() {
 
   const getSabores = () => {
     Axios.get('http://localhost:3001/sabor/list').then((response) => {
-      setSaborList(response.data);
+      setSaborList(response.data.map((val: Sabor) => {
+        return {
+          id: val.id,
+          nome: val.nome,
+          preco: val.preco,
+          numvendas: val.numvendas,
+          ingrediente: val.ingrediente,
+          tipo: val.tipo == 0 ? 'doce' : 'salgado'
+        }
+      }));
     });
   };
 
@@ -76,18 +85,18 @@ export default function Sabores() {
         <div className={stylesTema.paginas__lista}>
 
           {saborList.length > 0 ? (
-          <Lista
-            colunas={colunas}
-            lista={saborList}
-            setLista={setSaborList}
-            setOpenUpdateModal={setOpenUpdateModal}
-            pagina='sabor'
-            setId={setId}
-          />
+            <Lista
+              colunas={colunas}
+              lista={saborList}
+              setLista={setSaborList}
+              setOpenUpdateModal={setOpenUpdateModal}
+              pagina='sabor'
+              setId={setId}
+            />
           ) : (
-          <div className={stylesTema.paginas__lista__vazia}>
-            adicione um sabor
-          </div>
+            <div className={stylesTema.paginas__lista__vazia}>
+              Adicione um sabor
+            </div>
           )}
 
         </div>
@@ -117,7 +126,7 @@ export default function Sabores() {
           openModal={openUpdateModal}
           setOpenModal={setOpenUpdateModal}
         >
-          <UpdateForm 
+          <UpdateForm
             label='Novo preço'
             type='number'
             setNewValue={setNewPrice}
@@ -127,7 +136,6 @@ export default function Sabores() {
             setOpenUpdateModal={setOpenUpdateModal}
           />
         </Modal>
-
       }
     </>
   );
