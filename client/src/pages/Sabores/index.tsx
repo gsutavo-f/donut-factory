@@ -4,14 +4,17 @@ import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
 import Modal from '../../components/Modal';
 import SaboresForm from './SaboresForm';
 import Lista from '../../components/Lista';
+import UpdateForm from '../../components/UpdateForm';
+import { StringNumber } from '../../interfaces';
+
 
 interface Sabor {
-  codigo: number,
+  id: number,
   nome: string,
   preco: number,
   numvendas: number,
   ingrediente: string,
-  tipo: number | string;
+  tipo: number;
 }
 
 export default function Sabores() {
@@ -19,9 +22,13 @@ export default function Sabores() {
   const [price, setPrice] = useState(0.0);
   const [ingredient, setIngredient] = useState("");
   const [type, setType] = useState(0);
-  const [newPrice, setNewPrice] = useState(0);
 
-  const [openModal, setOpenModal] = useState(false);
+  const [id, setId] = useState(0);
+
+  const [newPrice, setNewPrice] = useState<StringNumber>(0);
+
+  const [openAddModal, setOpenAddModal] = useState(false);
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
 
   const [saborList, setSaborList] = useState<Sabor[]>([]);
 
@@ -33,15 +40,15 @@ export default function Sabores() {
     });
   };
 
-  const updatePrice = (id: number) => {
+  const updatePrice = (codigo: number) => {
     Axios.put('http://localhost:3001/sabor/update', { price: newPrice, id: id }).then(
       (response) => {
         setSaborList(saborList.map((val) => {
-          return val.codigo == id
+          return val.id == codigo
             ? {
-              codigo: val.codigo,
+              id: val.id,
               nome: val.nome,
-              preco: newPrice,
+              preco: newPrice as number,
               numvendas: val.numvendas,
               ingrediente: val.ingrediente,
               tipo: val.tipo
@@ -59,7 +66,7 @@ export default function Sabores() {
       <div className={stylesTema.paginas}>
         <div className={stylesTema.paginas__botoes}>
           <button
-            onClick={() => setOpenModal(true)}
+            onClick={() => setOpenAddModal(true)}
             className={stylesTema.paginas__botoes__botao}
           >
             Adicionar novo sabor
@@ -73,8 +80,9 @@ export default function Sabores() {
             colunas={colunas}
             lista={saborList}
             setLista={setSaborList}
-            update={updatePrice}
+            setOpenUpdateModal={setOpenUpdateModal}
             pagina='sabor'
+            setId={setId}
           />
           ) : (
           <div className={stylesTema.paginas__lista__vazia}>
@@ -85,11 +93,11 @@ export default function Sabores() {
         </div>
       </div>
 
-      {openModal
+      {openAddModal
         && <Modal
           titulo='Adicione um sabor'
-          openModal={openModal}
-          setOpenModal={setOpenModal}
+          openModal={openAddModal}
+          setOpenModal={setOpenAddModal}
         >
           <SaboresForm
             name={name}
@@ -102,6 +110,25 @@ export default function Sabores() {
             setType={setType}
           />
         </Modal>}
+
+      {openUpdateModal
+        && <Modal
+          titulo='Atualize o preço'
+          openModal={openUpdateModal}
+          setOpenModal={setOpenUpdateModal}
+        >
+          <UpdateForm 
+            label='Novo preço'
+            type='number'
+            setNewValue={setNewPrice}
+            newValue={newPrice}
+            submit={updatePrice}
+            id={id}
+            setOpenUpdateModal={setOpenUpdateModal}
+          />
+        </Modal>
+
+      }
     </>
   );
 }

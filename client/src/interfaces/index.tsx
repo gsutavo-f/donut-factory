@@ -40,3 +40,5 @@ export interface Filial {
   endereco: string
 }
 
+export type StringNumber = string | number;
+

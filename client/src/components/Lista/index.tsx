@@ -8,10 +8,11 @@ interface Props<T> {
   colunas: string[];
   lista: Array<any>;
   setLista: (value: React.SetStateAction<T[]>) => void
-  update?: (id: number) => void;
+  setOpenUpdateModal?: React.Dispatch<React.SetStateAction<boolean>>;
+  setId?: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function Lista<T>({ colunas, lista, pagina, update, setLista }: Props<T>) {
+export default function Lista<T>({ colunas, lista, pagina, setOpenUpdateModal, setLista, setId }: Props<T>) {
 
   function deletaItem(codigo: number, pagina: string) {
     Axios.delete(`http://localhost:3001/${pagina}/delete/${codigo}`).then((response) => {
@@ -19,6 +20,11 @@ export default function Lista<T>({ colunas, lista, pagina, update, setLista }: P
         return val.id != codigo
       }))
     });
+  }
+
+  function atualizaItem(codigo: number) {
+    setId!(codigo);
+    setOpenUpdateModal!(true);
   }
 
   return (
@@ -42,9 +48,9 @@ export default function Lista<T>({ colunas, lista, pagina, update, setLista }: P
                 }
               </td>
             ))}
-              {`${update}` != undefined &&
+              {setOpenUpdateModal &&
                 <td className={styles.tabela__body__linha__icone}>
-                  <img src={editIcon} onClick={() => update!(item.id)}></img>
+                  <img src={editIcon} onClick={() => atualizaItem(item.id)}></img>
                 </td>
               }
               <td className={styles.tabela__body__linha__icone}>
