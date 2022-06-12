@@ -5,8 +5,8 @@ import styles from '../../../styles/Formulario.module.scss';
 import { ClienteSelection, FilialSelection, SaborSelection, Compra } from '../../../types';
 
 interface IComprasForm {
-  precoTotal: number;
-  setPrecoTotal: React.Dispatch<React.SetStateAction<number>>;
+  quantidade: number;
+  setQuantidade: React.Dispatch<React.SetStateAction<number>>;
   codCliente: number;
   setCodCliente: React.Dispatch<React.SetStateAction<number>>;
   clientesList: ClienteSelection[];
@@ -21,7 +21,7 @@ interface IComprasForm {
 }
 
 export default function ComprasForm(
-  { precoTotal, setPrecoTotal,
+  { quantidade, setQuantidade,
     codCliente, setCodCliente,
     codFilial, setCodFilial,
     codSabor, setCodSabor,
@@ -33,14 +33,13 @@ export default function ComprasForm(
     evento.preventDefault();
 
     Axios.post('http://localhost:3001/compra/create', {
-      precoTotal: precoTotal,
+      quantidade: quantidade,
       codCliente: codCliente,
       codFilial: codFilial,
       codSabor: codSabor
     }).then(() => {
       console.log("sucess");
     });
-    getCompras;
   }
 
   useEffect(() => {
@@ -90,17 +89,17 @@ export default function ComprasForm(
           setCodSabor(event!.value);
         }}
       />
-      <label htmlFor="precoTotal">
-        Preço total
+      <label htmlFor="quantidade">
+        Quantidade
       </label>
       <input
         type="number"
-        name="precoTotal"
-        value={precoTotal}
-        onChange={(event) => setPrecoTotal(event.target.valueAsNumber)}
+        name="quantidade"
+        value={quantidade}
+        onChange={(event) => setQuantidade(event.target.valueAsNumber)}
         required
       />
-      <button className={styles.botao} type="submit" onClick={() => getCompras}>
+      <button className={styles.botao} type="submit">
         Adicionar compra
       </button>
     </form>

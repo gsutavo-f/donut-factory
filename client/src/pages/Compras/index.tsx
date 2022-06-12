@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import Lista from '../../components/Lista';
 
 export default function Compras() {
-  const [precoTotal, setPrecoTotal] = useState(0);
+  const [quantidade, setQuantidade] = useState(0);
   const [codCliente, setCodCliente] = useState(0);
   const [codFilial, setCodFilial] = useState(0);
   const [codSabor, setCodSabor] = useState(0);
@@ -75,8 +75,8 @@ export default function Compras() {
           setOpenModal={setOpenModal}
         >
           <ComprasForm
-            precoTotal={precoTotal}
-            setPrecoTotal={setPrecoTotal}
+            quantidade={quantidade}
+            setQuantidade={setQuantidade}
             codCliente={codCliente}
             setCodCliente={setCodCliente}
             clientesList={clientesList}
