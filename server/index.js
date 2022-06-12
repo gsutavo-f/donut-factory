@@ -252,16 +252,26 @@ app.put("/sabor/update", (req, res) => {
 app.delete("/sabor/delete/:id", (req, res) => {
     const id = req.params.id;
     db.query(
-        "delete from sabordonut where id = ?",
+        "delete from filial_sabordonur where codsabor = ?",
         id,
         (err, result) => {
             if (err) {
                 console.log(err);
             } else {
-                res.send(result);
+                db.query(
+                    "delete from sabordonut where id = ?",
+                    id,
+                    (err, result) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            res.send(result);
+                        }
+                    }
+                );
             }
         }
-    );
+    )
 });
 
 app.post('/cliente/create', (req, res) => {
