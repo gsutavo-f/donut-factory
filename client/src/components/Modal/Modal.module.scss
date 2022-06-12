@@ -33,6 +33,7 @@
 
     &__titulo {
       color: #58C0FF;
+      text-align: center;
     }
 
     &__fechar {
@@ -40,6 +41,9 @@
       font-size: 50px;
       font-family: 'Courier New', Courier, monospace;
       font-weight: bolder;
+      position: absolute;
+      right: 15px;
+      top: 5px;
     }
 
     &__fechar:hover {
