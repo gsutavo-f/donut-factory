@@ -349,13 +349,23 @@ app.get('/compra/list', (req, res) => {
 app.delete("/compra/delete/:id", (req, res) => {
     const id = req.params.id;
     db.query(
-        "delete from compra where id = ?",
+        "delete from filial_compra where codcompra = ?",
         id,
         (err, result) => {
             if (err) {
                 console.log(err);
             } else {
-                res.send(result);
+                db.query(
+                    "delete from compra where id = ?",
+                    id,
+                    (err, result) => {
+                        if(err) {
+                            console.log(err);
+                        } else {
+                            res.send(result);
+                        }
+                    }
+                )
             }
         }
     );
