@@ -66,20 +66,14 @@ export default function Filiais() {
           </button>
         </div>
         <div className={stylesTema.paginas__lista}>
-          {filialList.length > 0 ? (
-            <Lista
-              colunas={colunas}
-              lista={filialList}
-              setLista={setFilialList}
-              setOpenUpdateModal={setOpenUpdateModal}
-              pagina='filial'
-              setId={setId}
-            />
-          ) : (
-            <div className={stylesTema.paginas__lista__vazia}>
-              Adicione uma filial
-            </div>
-          )}
+          <Lista
+            colunas={colunas}
+            lista={filialList}
+            setLista={setFilialList}
+            setOpenUpdateModal={setOpenUpdateModal}
+            pagina='filial'
+            setId={setId}
+          />
         </div>
       </div>
 
@@ -122,8 +116,7 @@ export default function Filiais() {
             id={id}
             setOpenUpdateModal={setOpenUpdateModal}
           />
-        </Modal>
-      }
+        </Modal>}
     </>
   )
 }

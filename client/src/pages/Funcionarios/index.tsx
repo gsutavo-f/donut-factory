@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
 import Axios from 'axios';
 import Modal from '../../components/Modal';
 import FuncionariosForm from './FuncionariosForm';
 import { FilialSelection } from '../../types';
+import Lista from '../../components/Lista';
 
 interface Funcionario {
   nome: string,
@@ -20,10 +21,15 @@ export default function Funcionarios() {
   const [salary, setSalary] = useState(0);
   const [codFilial, setCodFilial] = useState(0);
 
+  const [id, setId] = useState(0);
+
   const [openModal, setOpenModal] = useState(false);
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
 
   const [filiaisList, setFiliaisList] = useState<FilialSelection[]>([]);
   const [employeeList, setEmployeeList] = useState<Funcionario[]>([]);
+
+  const colunas: string[] = ['nome', 'cpf', 'cargo', 'salario'];
 
   const getEmployees = () => {
     Axios.get('http://localhost:3001/funcionario/list').then((response) => {
@@ -35,6 +41,8 @@ export default function Funcionarios() {
     setFiliaisList(response.data);
   });
 
+  useEffect(getEmployees, [employeeList]);
+
   return (
     <>
       <div className={stylesTema.paginas}>
@@ -45,25 +53,16 @@ export default function Funcionarios() {
           >
             Adicionar novo funcionário
           </button>
-          <button
-            onClick={getEmployees}
-            className={stylesTema.paginas__botoes__botao}
-          >
-            Listar funcionários
-          </button>
         </div>
         <div className={stylesTema.paginas__lista}>
-          {employeeList.map((val, key) => {
-            return (
-              <div className={stylesTema.paginas__lista__pagina} key={key}>
-                <h3>Name: {val.nome}</h3>
-                <h3>Document: {val.cpf}</h3>
-                <h3>Position: {val.cargo}</h3>
-                <h3>Salary: {val.salario}</h3>
-                <h3>Filial: {val.codfilial}</h3>
-              </div>
-            );
-          })}
+          <Lista
+            colunas={colunas}
+            lista={employeeList}
+            setLista={setEmployeeList}
+            setOpenUpdateModal={setOpenUpdateModal}
+            pagina='funcionario'
+            setId={setId}
+          />
         </div>
       </div>
 
@@ -87,6 +86,24 @@ export default function Funcionarios() {
             filiaisList={filiaisList}
           />
         </Modal>}
+
+      {/* {openUpdateModal
+        && <Modal
+          titulo='Atualize o não sei ainda'
+          openModal={openUpdateModal}
+          setOpenModal={setOpenUpdateModal}
+        >
+          <UpdateForm
+            label='Novo preço'
+            type='number'
+            setNewValue={setNewPrice}
+            newValue={newPrice}
+            submit={updatePrice}
+            id={id}
+            setOpenUpdateModal={setOpenUpdateModal}
+          />
+        </Modal>
+      } */}
     </>
   )
 }

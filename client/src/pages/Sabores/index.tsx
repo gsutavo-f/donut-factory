@@ -83,7 +83,6 @@ export default function Sabores() {
 
         </div>
         <div className={stylesTema.paginas__lista}>
-
           <Lista
             colunas={colunas}
             lista={saborList}
@@ -92,8 +91,6 @@ export default function Sabores() {
             pagina='sabor'
             setId={setId}
           />
-
-
         </div>
       </div>
 
@@ -130,8 +127,7 @@ export default function Sabores() {
             id={id}
             setOpenUpdateModal={setOpenUpdateModal}
           />
-        </Modal>
-      }
+        </Modal>}
     </>
   );
 }
