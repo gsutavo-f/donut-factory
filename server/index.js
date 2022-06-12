@@ -265,35 +265,37 @@ app.delete("/cliente/delete/:id", (req, res) => {
 });
 
 app.post('/compra/create', (req, res) => {
-    const precototal = req.body.precoTotal;
-    const codcliente = req.body.codCliente;
+    const codCliente = req.body.codCliente;
     const codFilial = req.body.codFilial;
     const codSabor = req.body.codSabor;
+    const quantidade = req.body.quantidade;
 
     db.query(
-        "insert into compra (precototal, datacompra, codcliente) values (?,?,?)",
-        [precototal, new Date(), codcliente],
-        (err, result) => {
+        "select preco from sabordonut where sabordonut.id = ?",
+        codSabor,
+        (err, rows) => {
             if (err) {
                 console.log(err);
             } else {
-                let codCompra = result.insertId;
-                db.query(
-                    "insert into filial_compra (codfilial, codcompra) values (?,?)",
-                    [codFilial, codCompra],
-                    (err, result) => {
-                        if (err) {
-                            console.log(err);
-                        }
-                    }
-                );
+                const precototal =  rows[0].preco * quantidade;
+                insertCompra(codFilial, codCliente, precototal);
             }
         }
     );
 
     db.query(
+        "update sabordonut set numvendas = numvendas + ? where sabordonut.id = ?",
+        [quantidade, codSabor],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+        }
+    )
+
+    db.query(
         "update cliente set numcompras = numcompras + 1 where cliente.id = ?",
-        codcliente,
+        codCliente,
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -303,6 +305,33 @@ app.post('/compra/create', (req, res) => {
         }
     );
 });
+
+function insertCompra(codFilial, codCliente, precototal) {
+    db.query(
+        "insert into compra (precototal, datacompra, codcliente) values (?,?,?)",
+        [precototal, new Date(), codCliente],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                let codCompra = result.insertId;
+                insertFilialCompra(codFilial, codCompra);
+            }
+        }
+    );
+}
+
+function insertFilialCompra(codFilial, codCompra) {
+    db.query(
+        "insert into filial_compra (codfilial, codcompra) values (?,?)",
+        [codFilial, codCompra],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+        }
+    );
+}
 
 app.get('/compra/list', (req, res) => {
     db.query(
@@ -364,7 +393,7 @@ app.get("/compra/listSaboresByFilial/:idFilial", (req, res) => {
         "select fs.codsabor as value, s.nome as label from filial_sabordonut fs inner join sabordonut s on s.id = fs.codsabor where fs.codfilial = ?",
         idFilial,
         (err, result) => {
-            if(err) {
+            if (err) {
                 console.log(err);
             } else {
                 res.send(result);

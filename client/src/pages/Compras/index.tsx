@@ -6,7 +6,7 @@ import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
 import { useEffect, useState } from 'react';
 
 export default function Compras() {
-  const [precoTotal, setPrecoTotal] = useState(0);
+  const [quantidade, setQuantidade] = useState(0);
   const [codCliente, setCodCliente] = useState(0);
   const [codFilial, setCodFilial] = useState(0);
   const [codSabor, setCodSabor] = useState(0);
@@ -67,7 +67,7 @@ export default function Compras() {
             return (
               <div className={stylesTema.paginas__lista__pagina} key={key}>
                 <div>
-                  <h3>Valor: {val.precototal}</h3>
+                  <h3>Preço Total: {val.precototal}</h3>
                   <h3>Cliente: {val.codcliente}</h3>
                   <h3>Data: {val.datacompra}</h3>
                 </div>
@@ -87,8 +87,8 @@ export default function Compras() {
           setOpenModal={setOpenModal}
         >
           <ComprasForm
-            precoTotal={precoTotal}
-            setPrecoTotal={setPrecoTotal}
+            quantidade={quantidade}
+            setQuantidade={setQuantidade}
             codCliente={codCliente}
             setCodCliente={setCodCliente}
             clientesList={clientesList}
