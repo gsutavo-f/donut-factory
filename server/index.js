@@ -64,6 +64,21 @@ app.put("/funcionario/update", (req, res) => {
     );
 });
 
+app.delete("/funcionario/delete/:id", (req, res) => {
+    const id = req.params.id;
+    db.query(
+        "delete from funcionario where id = ?",
+        id,
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+})
+
 app.post("/filial/create", (req, res) => {
     const name = req.body.name;
     const address = req.body.address;
