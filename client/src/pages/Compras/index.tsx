@@ -4,6 +4,7 @@ import ComprasForm from './ComprasForm';
 import Modal from '../../components/Modal';
 import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
 import { useEffect, useState } from 'react';
+import Lista from '../../components/Lista';
 
 export default function Compras() {
   const [precoTotal, setPrecoTotal] = useState(0);
@@ -11,28 +12,21 @@ export default function Compras() {
   const [codFilial, setCodFilial] = useState(0);
   const [codSabor, setCodSabor] = useState(0);
 
+  const [id, setId] = useState(0);
+
   const [openModal, setOpenModal] = useState(false);
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
 
   const [comprasList, setComprasList] = useState<Compra[]>([]);
   const [clientesList, setClientesList] = useState<ClienteSelection[]>([]);
   const [filiaisList, setFiliaisList] = useState<FilialSelection[]>([]);
   const [saboresList, setSaboresList] = useState<SaborSelection[]>([]);
 
-  useEffect(() => {
-    getCompras();
-  }, [comprasList])
+  const colunas: string[] = ['id', 'codcliente', 'precototal', 'datacompra'];
 
   function getCompras() {
     Axios.get('http://localhost:3001/compra/list').then((response) => {
       setComprasList(response.data);
-    });
-  }
-
-  const deleteCompra = (id: number) => {
-    Axios.delete(`http://localhost:3001/compra/delete/${id}`).then((response) => {
-      setComprasList(comprasList.filter((val: Compra) => {
-        return val.id != id
-      }))
     });
   }
 
@@ -44,6 +38,7 @@ export default function Compras() {
     setFiliaisList(response.data);
   });
 
+  useEffect(getCompras, [comprasList]);
 
   return (
     <>
@@ -63,20 +58,13 @@ export default function Compras() {
           </button>
         </div>
         <div className={stylesTema.paginas__lista}>
-          {comprasList.map((val, key) => {
-            return (
-              <div className={stylesTema.paginas__lista__pagina} key={key}>
-                <div>
-                  <h3>Valor: {val.precototal}</h3>
-                  <h3>Cliente: {val.codcliente}</h3>
-                  <h3>Data: {val.datacompra}</h3>
-                </div>
-                <div>
-                  <button onClick={() => { deleteCompra(val.id) }}>Delete</button>
-                </div>
-              </div>
-            );
-          })}
+          <Lista
+            colunas={colunas}
+            lista={comprasList}
+            setLista={setComprasList}
+            pagina='compra'
+            setId={setId}
+          />
         </div>
       </div>
 
