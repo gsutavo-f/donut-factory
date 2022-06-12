@@ -50,12 +50,6 @@ export default function Compras() {
           >
             Adicionar nova compra
           </button>
-          <button
-            onClick={getCompras}
-            className={stylesTema.paginas__botoes__botao}
-          >
-            Listar compras
-          </button>
         </div>
         <div className={stylesTema.paginas__lista}>
           <Lista

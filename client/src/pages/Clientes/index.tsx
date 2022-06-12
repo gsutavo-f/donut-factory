@@ -70,12 +70,6 @@ export default function Clientes() {
           >
             Adicionar novo cliente
           </button>
-          <button
-            onClick={getClients}
-            className={stylesTema.paginas__botoes__botao}
-          >
-            Listar clientes
-          </button>
         </div>
         <div className={stylesTema.paginas__lista}>
           <Lista
