@@ -47,6 +47,23 @@ app.get("/funcionario/list", (req, res) => {
     );
 });
 
+app.put("/funcionario/update", (req, res) => {
+    const salary = req.body.salary;
+    const id = req.body.id;
+
+    db.query(
+        "update funcionario set salario = ? where id = ?",
+        [salary, id],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
 app.post("/filial/create", (req, res) => {
     const name = req.body.name;
     const address = req.body.address;

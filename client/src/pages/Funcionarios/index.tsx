@@ -3,22 +3,16 @@ import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
 import Axios from 'axios';
 import Modal from '../../components/Modal';
 import FuncionariosForm from './FuncionariosForm';
-import { FilialSelection } from '../../types';
+import { Funcionario, FilialSelection, StringNumber } from '../../types';
+import UpdateForm from '../../components/UpdateForm';
 import Lista from '../../components/Lista';
-
-interface Funcionario {
-  nome: string,
-  cpf: string,
-  cargo: string,
-  salario: number,
-  codfilial: number
-}
 
 export default function Funcionarios() {
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const [position, setPosition] = useState("");
   const [salary, setSalary] = useState(0);
+  const [newSalary, setNewSalary] = useState<StringNumber>(0);
   const [codFilial, setCodFilial] = useState(0);
 
   const [id, setId] = useState(0);
@@ -36,6 +30,27 @@ export default function Funcionarios() {
       setEmployeeList(response.data);
     });
   };
+
+  const updateFuncionario = (codigo: number) => {
+    Axios.put('http://localhost:3001/funcionario/update', {salary: newSalary, id: id}).then(
+      (response) => {
+        setEmployeeList(employeeList.map((val: Funcionario) => {
+          return val.id == codigo
+            ? {
+              id: val.id,
+              nome: val.nome,
+              cpf: val.cpf,
+              cargo: val.cargo,
+              salario: newSalary as number,
+              dataemissao: val.dataemissao,
+              datasaida: val.datasaida,
+              codfilial: val.codfilial
+            }
+            : val;
+        }));
+      }
+    )
+  }
 
   Axios.get('http://localhost:3001/compra/listFiliais').then((response) => {
     setFiliaisList(response.data);
@@ -87,23 +102,23 @@ export default function Funcionarios() {
           />
         </Modal>}
 
-      {/* {openUpdateModal
+      {openUpdateModal
         && <Modal
-          titulo='Atualize o não sei ainda'
+          titulo='Atualize o salário'
           openModal={openUpdateModal}
           setOpenModal={setOpenUpdateModal}
         >
           <UpdateForm
-            label='Novo preço'
+            label='Novo salário'
             type='number'
-            setNewValue={setNewPrice}
-            newValue={newPrice}
-            submit={updatePrice}
+            setNewValue={setNewSalary}
+            newValue={newSalary}
+            submit={updateFuncionario}
             id={id}
             setOpenUpdateModal={setOpenUpdateModal}
           />
         </Modal>
-      } */}
+      }
     </>
   )
 }

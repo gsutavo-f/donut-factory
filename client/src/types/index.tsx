@@ -40,5 +40,16 @@ export interface Filial {
   endereco: string
 }
 
+export interface Funcionario {
+  id: number,
+  nome: string,
+  cpf: string,
+  cargo: string,
+  salario: number,
+  dataemissao: Date,
+  datasaida: Date,
+  codfilial: number
+}
+
 export type StringNumber = string | number;
 
