@@ -1,5 +1,7 @@
 import Axios from 'axios';
 import styles from '../../../styles/Formulario.module.scss';
+import DocumentInput from '../../../components/DocumentInput';
+import PhoneInput from '../../../components/PhoneInput';
 
 interface IClientesForm {
   name: string;
@@ -46,22 +48,16 @@ export default function ClientesForm(
       <label htmlFor="cpf">
         Cpf
       </label>
-      <input
-        type="text"
-        name="cpf"
+      <DocumentInput
         value={cpf}
         onChange={(event) => setCpf(event.target.value)}
-        required
       />
       <label htmlFor="celular">
         Celular
       </label>
-      <input
-        type="text"
-        name="celular"
+      <PhoneInput
         value={phone}
         onChange={(event) => setPhone(event.target.value)}
-        required
       />
       <label htmlFor="endereco">
         Endereço
@@ -74,7 +70,7 @@ export default function ClientesForm(
         required
       />
       <button className={styles.botao} type="submit">
-        Adicionar sabor
+        Adicionar cliente
       </button>
     </form>
   );

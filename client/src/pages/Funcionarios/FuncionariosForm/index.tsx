@@ -2,6 +2,7 @@ import Axios from 'axios';
 import Select from 'react-select';
 import { FilialSelection } from '../../../types';
 import styles from '../../../styles/Formulario.module.scss';
+import DocumentInput from '../../../components/DocumentInput';
 
 interface IFuncionariosForm {
   name: string;
@@ -54,12 +55,9 @@ export default function FuncionariosForm(
       <label htmlFor="cpf">
         Cpf
       </label>
-      <input
-        type="text"
-        name="cpf"
+      <DocumentInput
         value={cpf}
         onChange={(event) => setCpf(event.target.value)}
-        required
       />
       <label htmlFor="cargo">
         Cargo
