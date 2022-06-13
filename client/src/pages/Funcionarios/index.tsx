@@ -32,7 +32,7 @@ export default function Funcionarios() {
   };
 
   const updateFuncionario = (codigo: number) => {
-    Axios.put('http://localhost:3001/funcionario/update', {salary: newSalary, id: id}).then(
+    Axios.put('http://localhost:3001/funcionario/update', { salary: newSalary, id: id }).then(
       (response) => {
         setEmployeeList(employeeList.map((val: Funcionario) => {
           return val.id == codigo
@@ -87,19 +87,7 @@ export default function Funcionarios() {
           openModal={openModal}
           setOpenModal={setOpenModal}
         >
-          <FuncionariosForm
-            name={name}
-            setName={setName}
-            cpf={cpf}
-            setCpf={setCpf}
-            position={position}
-            setPosition={setPosition}
-            salary={salary}
-            setSalary={setSalary}
-            codFilial={codFilial}
-            setCodFilial={setCodFilial}
-            filiaisList={filiaisList}
-          />
+          <FuncionariosForm />
         </Modal>}
 
       {openUpdateModal

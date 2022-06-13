@@ -3,28 +3,17 @@ import Select from 'react-select';
 import { FilialSelection } from '../../../types';
 import styles from '../../../styles/Formulario.module.scss';
 import DocumentInput from '../../../components/DocumentInput';
+import { useState } from 'react';
 
-interface IFuncionariosForm {
-  name: string;
-  setName: React.Dispatch<React.SetStateAction<string>>;
-  cpf: string;
-  setCpf: React.Dispatch<React.SetStateAction<string>>;
-  position: string;
-  setPosition: React.Dispatch<React.SetStateAction<string>>;
-  salary: number;
-  setSalary: React.Dispatch<React.SetStateAction<number>>;
-  codFilial: number;
-  setCodFilial: React.Dispatch<React.SetStateAction<number>>;
-  filiaisList: FilialSelection[];
-}
+export default function FuncionariosForm() {
+  const [codFilial, setCodFilial] = useState(0);
 
-export default function FuncionariosForm(
-  { name, setName,
-    cpf, setCpf,
-    position, setPosition,
-    salary, setSalary,
-    codFilial, setCodFilial,
-    filiaisList }: IFuncionariosForm) {
+  const [name, setName] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [position, setPosition] = useState('');
+  const [salary, setSalary] = useState(0);
+
+  const [filiaisList, setFiliaisList] = useState<FilialSelection[]>([]);
 
   function adicionarFuncionario(evento: React.FormEvent<HTMLFormElement>) {
     evento.preventDefault();
@@ -39,6 +28,14 @@ export default function FuncionariosForm(
       console.log("sucess");
     });
   }
+
+  function getFiliais() {
+    Axios.get("http://localhost:3001/compra/listFiliais").then((response) => {
+      setFiliaisList(response.data);
+    });
+  }
+
+  getFiliais();
 
   return (
     <form onSubmit={adicionarFuncionario} className={styles.formulario}>
