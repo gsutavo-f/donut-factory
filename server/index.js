@@ -252,7 +252,7 @@ app.put("/sabor/update", (req, res) => {
 app.delete("/sabor/delete/:id", (req, res) => {
     const id = req.params.id;
     db.query(
-        "delete from filial_sabordonur where codsabor = ?",
+        "delete from filial_sabordonut where codsabor = ?",
         id,
         (err, result) => {
             if (err) {
