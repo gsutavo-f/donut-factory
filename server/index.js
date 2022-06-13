@@ -19,11 +19,11 @@ app.post('/funcionario/create', (req, res) => {
     const cpf = req.body.cpf;
     const position = req.body.position;
     const salary = req.body.salary;
-    const filial = req.body.filial;
+    const codFilial = req.body.codFilial;
 
     db.query(
         "insert into funcionario (nome, cpf, cargo, salario, codfilial, dataemissao) values (?,?,?,?,?,?)",
-        [name, cpf, position, salary, filial, new Date()],
+        [name, cpf, position, salary, codFilial, new Date()],
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -128,16 +128,47 @@ app.put("/filial/update", (req, res) => {
 app.delete("/filial/delete/:id", (req, res) => {
     const id = req.params.id;
     db.query(
-        "delete from filial where id = ?",
+        "delete from funcionario where codfilial = ?",
         id,
         (err, result) => {
             if (err) {
                 console.log(err);
             } else {
-                res.send(result);
+                db.query(
+                    "delete from filial_sabordonut where codfilial = ?",
+                    id,
+                    (err, result) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            db.query(
+                                "delete from filial_compra where codfilial = ?",
+                                id,
+                                (err, result) => {
+                                    if (err) {
+                                        console.log(err);
+                                    } else {
+                                        db.query(
+                                            "delete from filial where id = ?",
+                                            id,
+                                            (err, result) => {
+                                                if (err) {
+                                                    console.log(err);
+                                                } else {
+                                                    res.send(result);
+                                                }
+                                            }
+                                        );
+                                    }
+                                }
+                            )
+                        }
+                    }
+                )
             }
         }
-    );
+    )
+    
 });
 
 app.get("/filial/listSabores", (req, res) => {
@@ -221,16 +252,26 @@ app.put("/sabor/update", (req, res) => {
 app.delete("/sabor/delete/:id", (req, res) => {
     const id = req.params.id;
     db.query(
-        "delete from sabordonut where id = ?",
+        "delete from filial_sabordonut where codsabor = ?",
         id,
         (err, result) => {
             if (err) {
                 console.log(err);
             } else {
-                res.send(result);
+                db.query(
+                    "delete from sabordonut where id = ?",
+                    id,
+                    (err, result) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            res.send(result);
+                        }
+                    }
+                );
             }
         }
-    );
+    )
 });
 
 app.post('/cliente/create', (req, res) => {
@@ -319,7 +360,7 @@ app.post('/compra/create', (req, res) => {
             if (err) {
                 console.log(err);
             } else {
-                const precototal =  rows[0].preco * quantidade;
+                const precototal = rows[0].preco * quantidade;
                 insertCompra(codFilial, codCliente, precototal);
             }
         }
@@ -401,7 +442,7 @@ app.delete("/compra/delete/:id", (req, res) => {
                     "delete from compra where id = ?",
                     id,
                     (err, result) => {
-                        if(err) {
+                        if (err) {
                             console.log(err);
                         } else {
                             res.send(result);
