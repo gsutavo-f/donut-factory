@@ -3,24 +3,19 @@ import stylesTema from '../../components/PaginaPadrao/PaginaPadrao.module.scss';
 import Axios from 'axios';
 import Modal from '../../components/Modal';
 import FuncionariosForm from './FuncionariosForm';
-import { Funcionario, FilialSelection, StringNumber } from '../../types';
+import { Funcionario, StringNumber } from '../../types';
 import UpdateForm from '../../components/UpdateForm';
 import Lista from '../../components/Lista';
 
 export default function Funcionarios() {
-  const [name, setName] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [position, setPosition] = useState("");
-  const [salary, setSalary] = useState(0);
+
   const [newSalary, setNewSalary] = useState<StringNumber>(0);
-  const [codFilial, setCodFilial] = useState(0);
 
   const [id, setId] = useState(0);
 
   const [openModal, setOpenModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
 
-  const [filiaisList, setFiliaisList] = useState<FilialSelection[]>([]);
   const [employeeList, setEmployeeList] = useState<Funcionario[]>([]);
 
   const colunas: string[] = ['nome', 'cpf', 'cargo', 'salario'];
@@ -51,10 +46,6 @@ export default function Funcionarios() {
       }
     )
   }
-
-  Axios.get('http://localhost:3001/compra/listFiliais').then((response) => {
-    setFiliaisList(response.data);
-  });
 
   useEffect(getEmployees, [employeeList]);
 
