@@ -19,11 +19,11 @@ app.post('/funcionario/create', (req, res) => {
     const cpf = req.body.cpf;
     const position = req.body.position;
     const salary = req.body.salary;
-    const filial = req.body.filial;
+    const codFilial = req.body.codFilial;
 
     db.query(
         "insert into funcionario (nome, cpf, cargo, salario, codfilial, dataemissao) values (?,?,?,?,?,?)",
-        [name, cpf, position, salary, filial, new Date()],
+        [name, cpf, position, salary, codFilial, new Date()],
         (err, result) => {
             if (err) {
                 console.log(err);
