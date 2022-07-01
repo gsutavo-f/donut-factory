@@ -33,7 +33,7 @@ class FilialController {
 
    static updateFilial(req, res) {
       const {address} = req.body;
-      const {id} = req.body;
+      const {id} = req.params;
 
       db.query(
          "update filial set endereco = ? where id = ?",
@@ -89,19 +89,6 @@ class FilialController {
                      }
                   }
                );
-            }
-         }
-      );
-   }
-
-   static getSaboresForSelect(req, res) {
-      db.query(
-         "select id as value, nome as label from sabordonut",
-         (err, result) => {
-            if (err) {
-               res.status(500).send({message: err.message});
-            } else {
-               res.status(200).send(result);
             }
          }
       );
