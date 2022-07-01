@@ -83,20 +83,30 @@ class SaborController {
    static deleteSabor(req, res) {
       const {id} = req.params;
       db.query(
-         "delete from filial_sabordonut where codsabor = ?",
+         "delete from sabordonut_compra where codsabor = ?",
          id,
          (err) => {
             if (err) {
-               res.status(500).send({message: `${err.message} - Error deleting filial_sabordonut`});
+               res.status(500).send({message: `${err.message} - Error deleting sabordonut_compra`});
             } else {
                db.query(
-                  "delete from sabordonut where id = ?",
+                  "delete from filial_sabordonut where codsabor = ?",
                   id,
                   (err) => {
                      if (err) {
-                        res.status(500).send({message: `${err.message} - Error deleting sabordonut`});
+                        res.status(500).send({message: `${err.message} - Error deleting filial_sabordonut`});
                      } else {
-                        res.status(200).send({message: "Value Deleted"});
+                        db.query(
+                           "delete from sabordonut where id = ?",
+                           id,
+                           (err) => {
+                              if (err) {
+                                 res.status(500).send({message: `${err.message} - Error deleting sabordonut`});
+                              } else {
+                                 res.status(200).send({message: "Value Deleted"});
+                              }
+                           }
+                        );
                      }
                   }
                );

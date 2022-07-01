@@ -81,20 +81,30 @@ class CompraController {
    static deleteCompra(req, res) {
       const {id} = req.params;
       db.query(
-         "delete from filial_compra where codcompra = ?",
+         "delete from sabordonut_compra where codcompra = ?",
          id,
          (err) => {
             if (err) {
-               res.status(500).send({message: `${err.message} - Error deleting filial_compra`});
+               res.status(500).send({message: `${err.message} - Error deleting sabordonut_compra`});
             } else {
                db.query(
-                  "delete from compra where id = ?",
+                  "delete from filial_compra where codcompra = ?",
                   id,
                   (err) => {
                      if (err) {
-                        res.status(500).send({message: `${err.message} - Error deleting compra`});
+                        res.status(500).send({message: `${err.message} - Error deleting filial_compra`});
                      } else {
-                        res.status(200).send({message: "Value Deleted"});
+                        db.query(
+                           "delete from compra where id = ?",
+                           id,
+                           (err) => {
+                              if (err) {
+                                 res.status(500).send({message: `${err.message} - Error deleting compra`});
+                              } else {
+                                 res.status(200).send({message: "Value Deleted"});
+                              }
+                           }
+                        );
                      }
                   }
                );
