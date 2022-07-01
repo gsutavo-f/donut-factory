@@ -7,9 +7,9 @@ class FuncionarioController {
          "select * from funcionario",
          (err, result) => {
             if (err) {
-               console.log(err);
+               res.status(500).send({message: err.message})
             } else {
-               res.send(result);
+               res.status(200).send(result);
             }
          }
       );

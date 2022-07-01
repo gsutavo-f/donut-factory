@@ -1,5 +1,6 @@
 import express from "express";
 import funcionarios from "./funcionarioRoutes.js";
+import filiais from "./filialRoutes.js";
 
 function routes(app) {
    app.route('/').get((req, res) => {
@@ -12,7 +13,8 @@ function routes(app) {
 
    app.use(
       express.json(),
-      funcionarios
+      funcionarios,
+      filiais
    );
 }
 
