@@ -15,13 +15,13 @@ export default function FiliaisForm(
   function adicionarFilial(evento: React.FormEvent<HTMLFormElement>) {
     evento.preventDefault();
 
-    Axios.post('http://localhost:3001/filial/create', {
+    Axios.post('http://localhost:3001/filial', {
       name: name,
       address: address
     }).then(() => {
       console.log("sucess");
     });
-  };
+  }
 
   return (
     <form onSubmit={adicionarFilial} className={styles.formulario}>

@@ -26,13 +26,12 @@ export default function ComprasForm(
     codFilial, setCodFilial,
     codSabor, setCodSabor,
     clientesList, filiaisList,
-    saboresList, setSaboresList,
-    getCompras }: IComprasForm) {
+    saboresList, setSaboresList}: IComprasForm) {
 
   function adicionarCompra(evento: React.FormEvent<HTMLFormElement>) {
     evento.preventDefault();
 
-    Axios.post('http://localhost:3001/compra/create', {
+    Axios.post('http://localhost:3001/compra', {
       quantidade: quantidade,
       codCliente: codCliente,
       codFilial: codFilial,
@@ -43,7 +42,7 @@ export default function ComprasForm(
   }
 
   useEffect(() => {
-    Axios.get(`http://localhost:3001/compra/listSaboresByFilial/${codFilial}`).then((response) => {
+    Axios.get(`http://localhost:3001/sabor/filial/${codFilial}`).then((response) => {
       setSaboresList(response.data);
     })
   }, [codFilial]);

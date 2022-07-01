@@ -33,7 +33,7 @@ export default function SaboresForm(
   function adicionarSabor(evento: React.FormEvent<HTMLFormElement>) {
     evento.preventDefault();
 
-    Axios.post('http://localhost:3001/sabor/create', {
+    Axios.post('http://localhost:3001/sabor', {
       name: name,
       price: price,
       ingredient: ingredient,

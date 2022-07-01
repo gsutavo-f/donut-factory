@@ -15,7 +15,7 @@ interface Props<T> {
 export default function Lista<T>({ colunas, lista, pagina, setOpenUpdateModal, setLista, setId }: Props<T>) {
 
   function deletaItem(codigo: number, pagina: string) {
-    Axios.delete(`http://localhost:3001/${pagina}/delete/${codigo}`).then((response) => {
+    Axios.delete(`http://localhost:3001/${pagina}/${codigo}`).then(() => {
       setLista(lista.filter((val) => {
         return val.id != codigo
       }))

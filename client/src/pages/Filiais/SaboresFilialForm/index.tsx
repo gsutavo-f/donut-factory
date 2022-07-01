@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Select from 'react-select';
 import styles from '../../../styles/Formulario.module.scss';
 import { SaborSelection, FilialSelection } from '../../../types';
@@ -14,7 +14,7 @@ export default function SaboresFilialForm() {
     function adicionarSaborFilial(evento: React.FormEvent<HTMLFormElement>) {
         evento.preventDefault();
 
-        Axios.post("http://localhost:3001/filial/adicionaSaborFilial", {
+        Axios.post("http://localhost:3001/filial/sabor", {
             codFilial: codFilial,
             codSabor: codSabor
         }).then(() => {
@@ -23,13 +23,13 @@ export default function SaboresFilialForm() {
     }
 
     function getFiliais() {
-        Axios.get("http://localhost:3001/compra/listFiliais").then((response) => {
+        Axios.get("http://localhost:3001/filial/select").then((response) => {
             setFiliaisList(response.data);
         });
     }
 
     function getSabores() {
-        Axios.get("http://localhost:3001/filial/listSabores").then((response) => {
+        Axios.get("http://localhost:3001/sabor/select").then((response) => {
             setSaboresList(response.data);
         });
     }

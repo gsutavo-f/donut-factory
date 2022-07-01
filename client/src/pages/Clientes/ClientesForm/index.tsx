@@ -23,7 +23,7 @@ export default function ClientesForm(
   function adicionarCliente(evento: React.FormEvent<HTMLFormElement>) {
     evento.preventDefault();
 
-    Axios.post('http://localhost:3001/cliente/create', {
+    Axios.post('http://localhost:3001/cliente', {
       name: name,
       cpf: cpf,
       phone: phone,

@@ -15,7 +15,6 @@ export default function Compras() {
   const [id, setId] = useState(0);
 
   const [openModal, setOpenModal] = useState(false);
-  const [openUpdateModal, setOpenUpdateModal] = useState(false);
 
   const [comprasList, setComprasList] = useState<Compra[]>([]);
   const [clientesList, setClientesList] = useState<ClienteSelection[]>([]);
@@ -25,20 +24,20 @@ export default function Compras() {
   const colunas: string[] = ['id', 'codcliente', 'precototal', 'datacompra'];
 
   function getCompras() {
-    Axios.get('http://localhost:3001/compra/list').then((response) => {
+    Axios.get('http://localhost:3001/compra').then((response) => {
       setComprasList(response.data);
     });
   }
 
-  Axios.get('http://localhost:3001/compra/listClientes').then((response) => {
+  Axios.get('http://localhost:3001/cliente/select').then((response) => {
     setClientesList(response.data);
   });
 
-  Axios.get('http://localhost:3001/compra/listFiliais').then((response) => {
+  Axios.get('http://localhost:3001/filial/select').then((response) => {
     setFiliaisList(response.data);
   });
 
-  useEffect(getCompras, [comprasList]);
+  useEffect(getCompras, []);
 
   return (
     <>

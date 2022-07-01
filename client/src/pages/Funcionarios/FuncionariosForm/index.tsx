@@ -18,7 +18,7 @@ export default function FuncionariosForm() {
   function adicionarFuncionario(evento: React.FormEvent<HTMLFormElement>) {
     evento.preventDefault();
 
-    Axios.post('http://localhost:3001/funcionario/create', {
+    Axios.post('http://localhost:3001/funcionario', {
       name: name,
       cpf: cpf,
       position: position,
@@ -30,7 +30,7 @@ export default function FuncionariosForm() {
   }
 
   function getFiliais() {
-    Axios.get("http://localhost:3001/compra/listFiliais").then((response) => {
+    Axios.get("http://localhost:3001/filial/select").then((response) => {
       setFiliaisList(response.data);
     });
   }

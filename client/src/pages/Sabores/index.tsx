@@ -35,7 +35,7 @@ export default function Sabores() {
   const colunas: string[] = ['nome', 'preco', 'ingrediente', 'tipo'];
 
   const getSabores = () => {
-    Axios.get('http://localhost:3001/sabor/list').then((response) => {
+    Axios.get('http://localhost:3001/sabor').then((response) => {
       setSaborList(response.data.map((val: Sabor) => {
         return {
           id: val.id,
@@ -50,8 +50,8 @@ export default function Sabores() {
   };
 
   const updatePrice = (codigo: number) => {
-    Axios.put('http://localhost:3001/sabor/update', { price: newPrice, id: id }).then(
-      (response) => {
+    Axios.put(`http://localhost:3001/sabor/${codigo}`, { price: newPrice, id: id }).then(
+      () => {
         setSaborList(saborList.map((val) => {
           return val.id == codigo
             ? {
@@ -68,7 +68,7 @@ export default function Sabores() {
     )
   }
 
-  useEffect(getSabores, [saborList]);
+  useEffect(getSabores, []);
 
   return (
     <>

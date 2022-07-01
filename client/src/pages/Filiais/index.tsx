@@ -25,14 +25,14 @@ export default function Filiais() {
   const colunas: string[] = ['nome', 'endereco'];
 
   const getFiliais = () => {
-    Axios.get('http://localhost:3001/filial/list').then((response) => {
+    Axios.get('http://localhost:3001/filial').then((response) => {
       setFilialList(response.data);
     });
   }
 
   const updateAddress = (codigo: number) => {
-    Axios.put('http://localhost:3001/filial/update', { address: newAddress, id: id }).then(
-      (response) => {
+    Axios.put(`http://localhost:3001/filial/${codigo}`, { address: newAddress, id: id }).then(
+      () => {
         setFilialList(filialList.map((val: Filial) => {
           return val.id == codigo
             ? {
@@ -46,7 +46,7 @@ export default function Filiais() {
     );
   }
 
-  useEffect(getFiliais, [filialList]);
+  useEffect(getFiliais, []);
 
   return (
     <>

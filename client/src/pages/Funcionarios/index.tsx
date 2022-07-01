@@ -21,14 +21,14 @@ export default function Funcionarios() {
   const colunas: string[] = ['nome', 'cpf', 'cargo', 'salario'];
 
   const getEmployees = () => {
-    Axios.get('http://localhost:3001/funcionario/list').then((response) => {
+    Axios.get('http://localhost:3001/funcionario').then((response) => {
       setEmployeeList(response.data);
     });
   };
 
   const updateFuncionario = (codigo: number) => {
-    Axios.put('http://localhost:3001/funcionario/update', { salary: newSalary, id: id }).then(
-      (response) => {
+    Axios.put(`http://localhost:3001/funcionario/${codigo}`, { salary: newSalary, id: id }).then(
+      () => {
         setEmployeeList(employeeList.map((val: Funcionario) => {
           return val.id == codigo
             ? {
@@ -47,7 +47,7 @@ export default function Funcionarios() {
     )
   }
 
-  useEffect(getEmployees, [employeeList]);
+  useEffect(getEmployees, []);
 
   return (
     <>

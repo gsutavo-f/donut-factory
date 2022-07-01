@@ -34,14 +34,14 @@ export default function Clientes() {
   const colunas: string[] = ['nome', 'cpf', 'telefone', 'endereco'];
 
   const getClients = () => {
-    Axios.get('http://localhost:3001/cliente/list').then((response) => {
+    Axios.get('http://localhost:3001/cliente').then((response) => {
       setClientList(response.data);
     });
   }
 
   const updatePhone = (codigo: number) => {
-    Axios.put('http://localhost:3001/sabor/update', { phone: newPhone, id: id }).then(
-      (response) => {
+    Axios.put(`http://localhost:3001/cliente/${codigo}`, { phone: newPhone, id: id }).then(
+      () => {
         setClientList(clientList.map((val: Cliente) => {
           return val.id == codigo
             ? {
@@ -58,7 +58,7 @@ export default function Clientes() {
     )
   }
 
-  useEffect(getClients, [clientList]);
+  useEffect(getClients, []);
 
   return (
     <>

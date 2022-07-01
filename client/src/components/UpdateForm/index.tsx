@@ -1,6 +1,5 @@
 import styles from '../../styles/Formulario.module.scss';
 import { StringNumber } from '../../types';
-import { useRef } from 'react';
 
 interface Props {
   id: number;
