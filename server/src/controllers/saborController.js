@@ -28,6 +28,21 @@ class SaborController {
       );
    }
 
+   static getListSaboresByFilial(req, res) {
+      const {id} = req.params;
+      db.query(
+         "select fs.codsabor as value, s.nome as label from filial_sabordonut fs inner join sabordonut s on s.id = fs.codsabor where fs.codfilial = ?",
+         id,
+         (err, result) => {
+            if (err) {
+               res.status(500).send({message: err.message});
+            } else {
+               res.status(200).send(result);
+            }
+         }
+      );
+   }
+
    static createSabor(req, res) {
       const {
          name,

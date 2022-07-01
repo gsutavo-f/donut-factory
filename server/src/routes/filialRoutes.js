@@ -4,6 +4,7 @@ import FilialController from "../controllers/filialController.js";
 const router = express.Router();
 
 router
+   .get('/filial/select', FilialController.getFiliaisForSelect)
    .get('/filial', FilialController.getFiliais)
    .post('/filial/sabor', FilialController.addSaborFilial)
    .post('/filial', FilialController.createFilial)

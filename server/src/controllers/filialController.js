@@ -15,6 +15,19 @@ class FilialController {
       );
    }
 
+   static getFiliaisForSelect(req, res) {
+      db.query(
+         "select id as value, nome as label from filial",
+         (err, result) => {
+            if (err) {
+               res.status(500).send({message: err.message});
+            } else {
+               res.status(200).send(result);
+            }
+         }
+      );
+   }
+
    static createFilial(req, res) {
       const {name, address} = req.body;
 
