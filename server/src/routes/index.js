@@ -3,6 +3,7 @@ import funcionarios from "./funcionarioRoutes.js";
 import filiais from "./filialRoutes.js";
 import sabores from "./saborRoutes.js";
 import clientes from "./clienteRoutes.js";
+import compras from "./compraRoutes.js";
 
 function routes(app) {
    app.route('/').get((req, res) => {
@@ -18,7 +19,8 @@ function routes(app) {
       funcionarios,
       filiais,
       sabores,
-      clientes
+      clientes,
+      compras
    );
 }
 
